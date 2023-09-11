@@ -9,6 +9,10 @@ const server = express();
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
+app.use(express.json());
+
+app.use("/api/user", require("./routes/userRoute"));
+
 server.listen(process.env.PORT, () => {
   console.log(`Server running on port ${process.env.PORT}`);
 });
