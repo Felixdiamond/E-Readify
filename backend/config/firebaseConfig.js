@@ -3,6 +3,7 @@
 firebaseConfig = {
   apiKey: 'AIzaSyDRwnrTYvna6byWLxi7kATsof7f4HhGbSo',
   authDomain: 'e-readify.firebaseapp.com',
+  databaseURL: 'https://e-readify-default-rtdb.firebaseio.com',
   projectId: 'e-readify',
   storageBucket: 'e-readify.appspot.com',
   messagingSenderId: '1045617838240',
