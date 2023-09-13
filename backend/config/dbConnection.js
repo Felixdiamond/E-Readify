@@ -1,5 +1,5 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth } from "firebase/auth";
+const { initializeApp } = require('firebase/app');
+const { getAuth } = require("firebase/auth");
 const firebaseConfig = require("./firebaseConfig");
 
 const dbConnection = () => {

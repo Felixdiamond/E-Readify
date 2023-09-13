@@ -9,7 +9,7 @@ const {
   sendPasswordResetEmail,
 } = require('firebase/auth');
 
-class AuthController {
+class FirebaseAuthController {
   constructor() {
     this.auth = getAuth();
   }
@@ -28,17 +28,26 @@ class AuthController {
     return this.auth.currentUser;
   }
 
+  isVerified(){
+    const user = this.getCurrentUser();
+    if (user){
+      return user.emailVerified;
+    }
+    return false;
+  }
+
   async updateUser(data) {
     try {
       const user = this.getCurrentUser();
-      if (user) {
-        const userData = { ...user, ...data };
+      if (user){
+        const userData = {...user, ...data};
         await updateProfile(user, { userData });
         const updatedUser = this.getCurrentUser();
         return updatedUser;
       }
-
-      throw new Error('User is not logged in');
+      else {
+        throw new Error('User is not logged in');
+      }
     } catch (error) {
       throw error;
     }
@@ -53,7 +62,7 @@ class AuthController {
     }
   }
 
-  async loginUser(email, password) {
+  async logInUser(email, password) {
     try {
       const credentials = await signInWithEmailAndPassword(this.auth, email, password);
       const { user } = credentials;
@@ -70,6 +79,30 @@ class AuthController {
       throw error;
     }
   }
+
+  async verifyUser(){
+    try {
+      const user = this.getCurrentUser();
+      if (user){
+        await sendEmailVerification(user);
+      }
+      else{
+        throw new Error('User is  not signed in');
+      }
+    }catch(error){
+      throw error;
+    }
+  }
+
+  async resetPassword(email){
+    try{
+      await sendPasswordResetEmail(this.auth, email);
+    } catch (error){
+      throw error;
+    }
+  }
 }
 
-module.exports = AuthController;
+const firebaseAuthController = new FirebaseAuthController();
+
+module.exports = firebaseAuthController;
