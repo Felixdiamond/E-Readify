@@ -7,8 +7,8 @@ class AuthController{
     this.firebaseAuth = new firebaseAuthController();
   }
 
-  async addUser(email, password){
-    const response = await this.firebaseAuth.createUser(email, password);
+  async addUser(credentials){
+    const response = await this.firebaseAuth.createUser(credentials);
     return { response };
   }
 
@@ -30,8 +30,8 @@ class AuthController{
     return {response};
   }
 
-  async logIn(email, password){
-    const response = await this.firebaseAuth.logInUser(email, password);
+  async logIn(credentials){
+    const response = await this.firebaseAuth.logInUser(credentials);
     return {response};
   }
 

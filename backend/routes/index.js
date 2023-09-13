@@ -7,37 +7,71 @@ const authController = new AuthController();
 // const app = firebaseApp();
 
 router.post('/register', async (req, res) => {
-  const response = await authController.addUser(req.body.email, req.body.password);
+  console.log(req.body);
+  const response = await authController.addUser(req.body);
   return res.json(response);
 });
 router.post('/login', async (req, res) => {
-  const response = await authController.logIn(req.body.email, req.body.password);
+  const response = await authController.logIn(req.body);
   return res.json(response);
 });
-router.get('/logout', authController.logOut);
+router.get('/logout', (req, res) => {
+  authController.logOut()
+    .then(response => {
+      res.json(response);
+    })
+    .catch(error => {
+      res.status(500).json({ error: error.message });
+    });
+});
 router.get('/current-user', (req, res) => {
   const user = authController.getUser();
   res.json(user);
 });
+
 router.patch('/edit-user', (req, res) => {
-  const user = authController.updateUser(req.body.data);
-  res.json(user);
+  authController.updateUser(req.body)
+    .then(user => {
+      res.json(user);
+    })
+    .catch(error => {
+      res.status(500).json({ error: error.message });
+    });
 });
-router.delete('/delete-user', (req, res) => {
-  const user = authController.deleteUser();
-  res.json(user);
+
+router.get('/delete-user', (req, res) => {
+  authController.deleteUser()
+    .then(user => {
+      res.json(user);
+    })
+    .catch(error => {
+      res.status(500).json({ error: error.message });
+    });
 });
+
+router.get('/verify', (req, res) => {
+  authController.verifyUser()
+    .then(verify => {
+      res.json(verify);
+    })
+    .catch(error => {
+      res.status(500).json({ error: error.message });
+    });
+});
+
+router.get('/reset-password', (req, res) => {
+  authController.resetPassword()
+    .then(resetPassword => {
+      res.json(resetPassword);
+    })
+    .catch(error => {
+      res.status(500).json({ error: error.message });
+    });
+});
+
 router.get('/verification-status', (req, res) => {
   const isVerified = authController.getverificationStatus();
   res.json(isVerified);
-});
-router.get('/verify', (req, res) => {
-  const verify = authController.verifyUser();
-  res.json(verify);
-});
-router.get('/reset-password', (req, res) => {
-  const resetPassword = authController.resetPassword();
-  res.json(resetPassword);
 });
 
 module.exports = router;
