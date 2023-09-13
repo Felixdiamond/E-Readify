@@ -4,50 +4,50 @@ const firebaseAuthController = require('../firebase/firebaseAuthController');
 
 class AuthController{
   constructor(){
-    this.firebaseAuth = firebaseAuthController;
+    this.firebaseAuth = new firebaseAuthController();
   }
 
-  static async addUser(email, password){
+  async addUser(email, password){
     const response = await this.firebaseAuth.createUser(email, password);
-    return response;
+    return { response };
   }
 
-  static getUser(){
+  getUser(){
     return this.firebaseAuth.getCurrentUser();
   }
 
-  static async updateUser(data){
+  async updateUser(data){
     const response = await this.firebaseAuth.updateUser(data);
-    return response;
+    return {response};
   }
 
-  static getverificationStatus(){
+  getverificationStatus(){
     return this.firebaseAuth.isVerified();
   }
 
-  static async deleteUser(){
+  async deleteUser(){
     const response = await this.firebaseAuth.deleteUser();
-    return response;
+    return {response};
   }
 
-  static async logIn(){
-    const response = await this.firebaseAuth.logInUser();
-    return response;
+  async logIn(email, password){
+    const response = await this.firebaseAuth.logInUser(email, password);
+    return {response};
   }
 
-  static async logOut(){
+  async logOut(){
     const response = await this.firebaseAuth.logOutUser();
-    return response;
+    return {response};
   }
 
-  static async verifyUser(){
+  async verifyUser(){
     const response = await this.firebaseAuth.verifyUser();
-    return response;
+    return {response};
   }
 
-  static async resetPassword(){
+  async resetPassword(){
     const response = await this.firebaseAuth.resetPassword();
-    return response;
+    return {response};
   }
 }
 

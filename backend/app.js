@@ -1,13 +1,3 @@
-// const admin = require('firebase-admin');
-// const adminCredential = require('./config/firebase-admin.json');
-
-// admin.initializeApp({
-//   credential: admin.credential.cert(adminCredential),
-//   databaseURL: process.env.DATABASE_URL
-// });
-
-// module.exports = admin;
-
 const {initializeApp} = require('firebase/app');
 const dotenv = require('dotenv');
 

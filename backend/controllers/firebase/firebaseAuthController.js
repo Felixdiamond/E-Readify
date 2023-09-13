@@ -74,7 +74,8 @@ class FirebaseAuthController {
 
   async logOutUser() {
     try {
-      await signOut(this.auth);
+      const loggedOut = await signOut(this.auth);
+      return loggedOut;
     } catch (error) {
       throw error;
     }
@@ -103,6 +104,5 @@ class FirebaseAuthController {
   }
 }
 
-const firebaseAuthController = new FirebaseAuthController();
 
-module.exports = firebaseAuthController;
+module.exports = FirebaseAuthController;

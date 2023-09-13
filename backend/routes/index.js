@@ -1,18 +1,43 @@
 const express = require('express');
-const authController = require('../controllers/firebase/firebaseAuthController');
+const AuthController = require('../controllers/express/authController');
 const firebaseApp = require('../app');
 
 const router = express.Router();
+const authController = new AuthController();
 // const app = firebaseApp();
 
-router.post("/register", authController.createUser);
-router.post("/login", authController.logInUser);
-router.post("/logout", authController.logOutUser);
-router.get("/current-user", authController.getCurrentUser);
-router.patch("/edit-user", authController.updateUser);
-router.delete("/delete-user", authController.deleteUser);
-router.get("/verification-status", authController.isVerified);
-router.get("/verify", authController.verifyUser);
-router.get("/reset-password", authController.resetPassword);
+router.post('/register', async (req, res) => {
+  const response = await authController.addUser(req.body.email, req.body.password);
+  return res.json(response);
+});
+router.post('/login', async (req, res) => {
+  const response = await authController.logIn(req.body.email, req.body.password);
+  return res.json(response);
+});
+router.get('/logout', authController.logOut);
+router.get('/current-user', (req, res) => {
+  const user = authController.getUser();
+  res.json(user);
+});
+router.patch('/edit-user', (req, res) => {
+  const user = authController.updateUser(req.body.data);
+  res.json(user);
+});
+router.delete('/delete-user', (req, res) => {
+  const user = authController.deleteUser();
+  res.json(user);
+});
+router.get('/verification-status', (req, res) => {
+  const isVerified = authController.getverificationStatus();
+  res.json(isVerified);
+});
+router.get('/verify', (req, res) => {
+  const verify = authController.verifyUser();
+  res.json(verify);
+});
+router.get('/reset-password', (req, res) => {
+  const resetPassword = authController.resetPassword();
+  res.json(resetPassword);
+});
 
-module.exports= router;
+module.exports = router;
