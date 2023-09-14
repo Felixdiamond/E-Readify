@@ -6,16 +6,16 @@ const router = express.Router();
 const authController = new AuthController();
 // const app = firebaseApp();
 
-router.post('/register', async (req, res) => {
+router.post('/user/register', async (req, res) => {
   console.log(req.body);
   const response = await authController.addUser(req.body);
   return res.json(response);
 });
-router.post('/login', async (req, res) => {
+router.post('/user/login', async (req, res) => {
   const response = await authController.logIn(req.body);
   return res.json(response);
 });
-router.get('/logout', (req, res) => {
+router.get('/user/logout', (req, res) => {
   authController.logOut()
     .then(response => {
       res.json(response);
@@ -24,12 +24,12 @@ router.get('/logout', (req, res) => {
       res.status(500).json({ error: error.message });
     });
 });
-router.get('/current-user', (req, res) => {
+router.get('/user', (req, res) => {
   const user = authController.getUser();
   res.json(user);
 });
 
-router.patch('/edit-user', (req, res) => {
+router.patch('/user/edit', (req, res) => {
   authController.updateUser(req.body)
     .then(user => {
       res.json(user);
@@ -39,7 +39,7 @@ router.patch('/edit-user', (req, res) => {
     });
 });
 
-router.get('/delete-user', (req, res) => {
+router.get('/user/delete', (req, res) => {
   authController.deleteUser()
     .then(user => {
       res.json(user);
@@ -49,7 +49,7 @@ router.get('/delete-user', (req, res) => {
     });
 });
 
-router.get('/verify', (req, res) => {
+router.get('/user/verify', (req, res) => {
   authController.verifyUser()
     .then(verify => {
       res.json(verify);
@@ -59,7 +59,7 @@ router.get('/verify', (req, res) => {
     });
 });
 
-router.get('/reset-password', (req, res) => {
+router.get('/user/reset-password', (req, res) => {
   authController.resetPassword()
     .then(resetPassword => {
       res.json(resetPassword);
@@ -69,7 +69,7 @@ router.get('/reset-password', (req, res) => {
     });
 });
 
-router.get('/verification-status', (req, res) => {
+router.get('/user/verification-status', (req, res) => {
   const isVerified = authController.getverificationStatus();
   res.json(isVerified);
 });
