@@ -1,4 +1,4 @@
-const storageOpsController = require('../firebase/storageOpsController');
+const storageOpsController = require('../firebase/bookStorageOpsController');
 
 
 class BookController{

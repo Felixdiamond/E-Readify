@@ -2,7 +2,7 @@ const fs = require('fs');
 const admin = require('../../admin');
 
 
-class StorageOpsController{
+class BookStorageOpsController{
   constructor(){
     this.storageBucket = admin.storage().bucket();
   }
@@ -56,4 +56,4 @@ class StorageOpsController{
   }
 }
 
-module.exports = StorageOpsController;
+module.exports = BookStorageOpsController;
