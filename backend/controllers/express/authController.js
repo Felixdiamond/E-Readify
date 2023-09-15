@@ -9,7 +9,7 @@ class AuthController{
 
   async addUser(credentials){
     const response = await this.firebaseAuth.createUser(credentials);
-    return { response };
+    return response;
   }
 
   getUser(){
@@ -18,7 +18,7 @@ class AuthController{
 
   async updateUser(data){
     const response = await this.firebaseAuth.updateUser(data);
-    return {response};
+    return response;
   }
 
   getverificationStatus(){
@@ -27,27 +27,27 @@ class AuthController{
 
   async deleteUser(){
     const response = await this.firebaseAuth.deleteUser();
-    return {response};
+    return response;
   }
 
   async logIn(credentials){
     const response = await this.firebaseAuth.logInUser(credentials);
-    return {response};
+    return response;
   }
 
   async logOut(){
     const response = await this.firebaseAuth.logOutUser();
-    return {response};
+    return response;
   }
 
   async verifyUser(){
     const response = await this.firebaseAuth.verifyUser();
-    return {response};
+    return response;
   }
 
   async resetPassword(){
     const response = await this.firebaseAuth.resetPassword();
-    return {response};
+    return response;
   }
 }
 

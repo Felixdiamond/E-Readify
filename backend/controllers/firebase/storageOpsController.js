@@ -8,45 +8,51 @@ class StorageOpsController{
   }
 
   async uploadBook(filePaths){
-    const {localPath, remotePath} = filePaths;
-    if (!localPath || !remotePath){
-      return {error: "missing file paths"};
-    }
-    await this.storageBucket.upload(localPath, {
+    try{
+      const {localPath, remotePath} = filePaths;
+      if (!localPath || !remotePath){
+       return {error: "missing file paths"};
+      }
+      await this.storageBucket.upload(localPath, {
       destination: remotePath
-    }).then((response) => {
-      return response;
-    }).catch((error)=> {
+      });
+      return {status: 'file successfully uploaded'};
+    }catch(error){
       return error;
-    });
+    }
   }
 
   async downloadBook(filePaths){
-    const {localPath, remotePath} = filePaths;
-    if (!localPath || !remotePath){
-      return {error: "missing file paths"};
-    }
-    const file = this.storageBucket.file(remotePath);
-    file.createReadStream().
-    on('error', (error) => {
-      return error;
-    }).on('end', ()=>{
+    try{
+      const {localPath, remotePath} = filePaths;
+      if (!localPath || !remotePath){
+        return {error: "missing file paths"};
+      }
+      const file = this.storageBucket.file(remotePath);
+      file.createReadStream().
+      on('error', (error) => {
+        console.log(error);
+        return error;
+      }).on('end', ()=>{
       return {'status': 'file downloaded successfully'};
-    }).pipe(fs.createWriteStream(localPath));
+      }).pipe(fs.createWriteStream(localPath));
+    }catch(error){
+      return error;
+    }
   }
 
   async deleteBook(filePaths){
-    const {localPath, remotePath} = filePaths;
-    if (!localPath || !remotePath){
-      return {error: "missing file paths"};
-    }
-    const file = this.storageBucket.file(remotePath);
-    await file.delete().
-    then(() => {
+    try{
+      const {localPath, remotePath} = filePaths;
+      if (!localPath || !remotePath){
+        return {error: "missing file paths"};
+      }
+      const file = this.storageBucket.file(remotePath);
+      await file.delete();
       return {'status': 'file deleted'};
-    }).catch((error) => {
+    }catch(error){
       return error;
-    })
+    }
   }
 }
 

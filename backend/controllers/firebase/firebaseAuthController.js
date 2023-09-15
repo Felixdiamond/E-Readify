@@ -31,40 +31,48 @@ class FirebaseAuthController {
       });
     //   const db = yourFirestoreInstance; // Initialize Firestore as needed
     // await db.collection('users').doc(user.uid).set({ favorites });
-      return {id: user.id,
-        email: user.email,
+      return {
+        id: user.uid,
         verifiedUser: user.emailVerified,
-        info: user.providerData
-        };
-      
+      };
     } catch (error) {
       return error;
     }
   }
 
   getCurrentUser() {
-    return this.auth.currentUser;
+    try{
+      const user = this.auth.currentUser;
+      if (!user){
+        return {};
+      }
+      return {
+        id: user.uid,
+        verified: user.emailVerified,
+        data: [user.providerData[0].displayName, user.providerData[0].photoURL]
+      };
+    }
+    catch(error){
+      return error;
+    }
   }
 
   isVerified(){
     const user = this.getCurrentUser();
     if (user){
-      return user.emailVerified;
+      return user.verified;
     }
     return false;
   }
 
   async updateUser(data) {
     try {
-      const user = this.getCurrentUser();
+      const user = this.auth.currentUser;
       if (user && data){
-        await updateProfile(user, data);
-        // const newUser = this.getCurrentUser();
-        return {id: user.id,
-          email: user.email,
-          verifiedUser: user.emailVerified,
-          info: user.providerData
-          };
+        const userData = {...user, ...data}
+        await updateProfile(user, userData);
+        const updatedUser = this.getCurrentUser();
+        return updatedUser;
       }
       else {
         return {'error': 'missing request data'};
@@ -76,7 +84,7 @@ class FirebaseAuthController {
 
   async deleteUser() {
     try {
-      const user = this.getCurrentUser();
+      const user = this.auth.currentUser;
       console.log(user);
       await deleteUser(user);
       return {'status': 'deleted'}
@@ -94,11 +102,8 @@ class FirebaseAuthController {
       const credentials = await signInWithEmailAndPassword(this.auth, email, password);
       const { user } = credentials;
       return {
-        id: user.id,
-        email: user.email,
+        id: user.uid,
         verification: user.emailVerified,
-        info: user.providerData,
-        tokens: user.stsTokenManager
         };
     } catch (error) {
       return error;
