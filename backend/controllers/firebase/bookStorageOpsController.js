@@ -13,7 +13,7 @@ class BookStorageOpsController{
       if (!localPath || !remotePath){
        return {error: "missing file paths"};
       }
-      await this.storageBucket.upload(localPath, {
+      const response = await this.storageBucket.upload(localPath, {
       destination: remotePath
       });
       return {status: 'file successfully uploaded'};
@@ -41,10 +41,9 @@ class BookStorageOpsController{
     }
   }
 
-  async deleteBook(filePaths){
+  async deleteBook(remotePath){
     try{
-      const {localPath, remotePath} = filePaths;
-      if (!localPath || !remotePath){
+      if (!remotePath){
         return {error: "missing file paths"};
       }
       const file = this.storageBucket.file(remotePath);

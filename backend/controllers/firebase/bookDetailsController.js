@@ -14,7 +14,7 @@ class BookDetailsController{
 
   async getAllBooksInfo(){
     try {
-      const booksObject = await axios.get(`${this.BASEURL}`);
+      const booksObject = await axios.get(`${this.BASEURL}.json`);
       return booksObject;
     }catch(error){
       return error;
@@ -26,7 +26,7 @@ class BookDetailsController{
       return {error: 'missing user_id'};
     }
     try{
-      const myBooks = await axios.get(`${this.BASEURL}/${this.userId}`);
+      const myBooks = await axios.get(`${this.BASEURL}/${this.userId}.json`);
       return myBooks;
     }catch(error){
       return error;
@@ -38,24 +38,26 @@ class BookDetailsController{
       return {error: 'missing user_id'};
     }
     try{
-      await axios.delete(`${this.BASEURL}/${userId}`);
+      await axios.delete(`${this.BASEURL}/${userId}.json`);
       return {status: 'infos deleted'};
     }catch(error){
       return error;
     }
   }
 
-  async uploadBookInfo(bookInfo, userId){
-    if (!bookInfo || !userId){
+  async uploadBookInfo(bookDetails, userId){
+    console.log(bookDetails, userId);
+    if (!bookDetails || !userId){
       return {error: 'bad request'};
     }
-    const {title, description, addedDate, author, rating, genres, pages, localPath, remotePath} = bookInfo;
-    if (!title || !description || !addedDate || !rating || !author || !genres || !pages || !localPath || !remotePath){
+    const {title, description, addedDate, author, rating, genres, pages, localPath} = bookDetails;
+    if (!title || !description || !addedDate || !rating || !author || !genres || !pages || !localPath){
       return {error: 'incomplete book information'};
     }
     try{
-      const response = await axios.post(`${this.BASEURL}/${userId}`, bookInfo);
-      return response;
+      // console.log(`${this.BASEURL}/books/${userId}/`);
+      const response = await axios.post(`${this.BASEURL}/books/${userId}.json`, bookDetails);
+      return {id: response.data.name, status: response.status, text: response.statusText};
     }catch(error){
       return error;
     }
@@ -66,7 +68,7 @@ class BookDetailsController{
       return {error: 'missing user_id or book_id'};
     }
     try{
-      const bookDetails = await axios.get(`${this.BASEURL}/${userId}/${bookId}`);
+      const bookDetails = await axios.get(`${this.BASEURL}/${userId}/${bookId}.json`);
       return bookDetails;
     }
     catch(error){
@@ -83,7 +85,7 @@ class BookDetailsController{
         return {error: 'missing book information'};
       }
       try{
-        const response = await axios.put(`${this.BASEURL}/${userId}/${this.bookId}`, bookInfo);
+        const response = await axios.put(`${this.BASEURL}/${userId}/${this.bookId}.json`, bookInfo);
         return response;
       }catch(error){
         return error;
@@ -95,10 +97,13 @@ class BookDetailsController{
       return {error: 'missing user_id or book_id'};
     }
     try{
-      await axios.delete(`${this.BASEURL}/${userId}/${bookId}`);
+      await axios.delete(`${this.BASEURL}/${userId}/${bookId}.json`);
       return {status: 'info deleted'};
     }catch(error){
       return error
     }
   }
 }
+
+
+module.exports = BookDetailsController;
