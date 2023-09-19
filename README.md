@@ -27,9 +27,9 @@ The E-Readify backend provides APIs for books management and user management whi
 # User APIs
 
 - POST  /user/register
-    - this route takes in userModel present in the models as a Json file to create a user, update the user model in firebase and post the user favorites to the database
+    - this route takes in CustomUser Model present in the models file as a Json file to create a user, update the user model in firebase and post the user favorites to the database.
 ```c
-    const userModel = UserModel(
+    const userModel = CustomUser(
         email: 'testEmail@gmail.com',
         password: 'testpassword',
         photoUrl: 'photourl.google.com.jpg'
