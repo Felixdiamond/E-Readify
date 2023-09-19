@@ -63,13 +63,45 @@ The E-Readify backend provides APIs for books management and user management whi
         email: 'testEmail@gmail.com',
         password: 'testpassword'
         };
-    const response = request.post('myserverurl/user/register', credentials);
+    const response = request.post('myserverurl/user/login', credentials);
     console.log(response);
     //the output
      {
-        id: 'myNewUserId',
+        id: 'myUserId',
         verifiedUser: 'false',// verification status is always false for new users
       }
     // returns custom errors on failure
 ```
 
+-------------------------------------------------------------------------
+
+
+- GET  /user/logout
+    - sign out user from the current auth instance.
+```c
+    const response = request.get('myserverurl/user/logout', credentials);
+    console.log(response);
+    //the output
+    {
+        "status": loggedOut
+    }
+    // returns error on failure
+```
+
+-------------------------------------------------------------------------
+
+
+- GET  /user
+    - returns a current snapshot of the logged in user.
+```c
+    const response = request.get('myserverurl/user');
+    console.log(response);
+    //the output
+    {
+        id: 'userId',
+        verified: 'true/false',
+        data: ['displayName', 'photoURL']
+    }
+    // console.log(response); returns null if there is no user logged in at the moment
+    // returns error on failure
+```

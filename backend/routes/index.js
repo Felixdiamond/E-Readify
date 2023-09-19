@@ -33,7 +33,7 @@ router.get('/user/logout', (req, res) => {
   if (!currentUser){
     res.status(401).json({error: 'Unauthorized'});
   }
-  authController.logOut(currentUser.id)
+  authController.logOut()
     .then(response => {
       res.json(response);
     })
