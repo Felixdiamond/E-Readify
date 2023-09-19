@@ -42,7 +42,7 @@ model in firebase and post the user favorites to the database
     const newUser = request.post('myserverurl/user/register', userJson);
     console.log(newUser);
     //the output
-    >>> {
+     {
         id: 'myNewUserId',
         verifiedUser: 'false',// verification status is always false for new users
       }
