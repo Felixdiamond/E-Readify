@@ -37,7 +37,7 @@ model in firebase and post the user favorites to the database
         firstName: 'myFirstName',
         lastName: 'myLastName',
         favorites: [lets have an empty list that stores the id of favorite books later]
-);
+    );
     userJson = userModel.toJSON();
     const newUser = request.post('myserverurl/user/register', userJson);
     console.log(newUser);
