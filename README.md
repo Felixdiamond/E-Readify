@@ -19,3 +19,11 @@ We have many exciting features planned for E-Readify in the future! Some of thes
 - Reading challenges: Users will be able to participate in reading challenges and earn rewards for completing them.
 - Book clubs: Users will be able to join book clubs and discuss books with other readers.
 
+
+
+## E-Readify Backend APIs Documentation
+The E-Readify backend provides APIs for books management and user management which is documented below
+
+# User APIs
+
+- GET
