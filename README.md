@@ -27,8 +27,8 @@ The E-Readify backend provides APIs for books management and user management whi
 # User APIs
 
 
- ### POST  /user/register
-     takes in CustomUser Model present in the models file as a Json object to create a user, update the user model in firebase and post the user favorites to the database.
+ - ### POST  /user/register
+    - takes in CustomUser Model present in the models file as a Json object to create a user, update the user model in firebase and post the user favorites to the database.
 
 
 
@@ -53,7 +53,7 @@ The E-Readify backend provides APIs for books management and user management whi
 ```
 
 
- ### POST  /user/login
+ - ### POST  /user/login
     takes in the user email and password as a Json object
     and create a session for the user.
 
@@ -75,8 +75,8 @@ The E-Readify backend provides APIs for books management and user management whi
 ```
 
 
- ### GET  /user/logout
-     sign out user from the current auth instance.
+- ### GET  /user/logout
+    - sign out user from the current auth instance.
 
 
 ```c
@@ -90,8 +90,8 @@ The E-Readify backend provides APIs for books management and user management whi
 ```
 
 
-### GET  /user
-    returns a current snapshot of the logged in user.
+- ### GET  /user
+   - returns a current snapshot of the logged in user.
 
 
 ```c
