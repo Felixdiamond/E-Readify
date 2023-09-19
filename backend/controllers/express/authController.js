@@ -1,10 +1,12 @@
 const firebaseAuthController = require('../firebase/firebaseAuthController');
+const bookDetailsController = require('../firebase/bookDetailsController');
 
 
 
 class AuthController{
   constructor(){
     this.firebaseAuth = new firebaseAuthController();
+    this.bookDetails = new bookDetailsController();
   }
 
   async addUser(credentials){
@@ -25,8 +27,10 @@ class AuthController{
     return this.firebaseAuth.isVerified();
   }
 
-  async deleteUser(){
-    const response = await this.firebaseAuth.deleteUser();
+  async deleteUser(userId){
+    const response = await this.bookDetails.deleteAllUserBooksInfo(userId).then(async (_)=>{
+      await this.firebaseAuth.deleteUser();
+    });
     return response;
   }
 

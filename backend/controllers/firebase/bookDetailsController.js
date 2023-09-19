@@ -109,18 +109,18 @@ class BookDetailsController{
     }
     try{
       const response = await axios.post(`${this.BASEURL}/favorites/${userId}.json`, favorites);
-      return response.data;
+      return {id: response.data.name, status: response.status, text: response.statusText};
     }catch(error){
       return error;
     }
   }
 
-  async editUserFavorites(userId, favorites){
-    if (!userId || !favorites){
+  async editUserFavorites(userId, favId, favorites){
+    if (!userId || !favorites || !favId){
       return {error: 'missing parameters'};
     }
     try{
-      const response = await axios.put(`${this.BASEURL}/favorites/${userId}.json`, favorites);
+      const response = await axios.put(`${this.BASEURL}/favorites/${userId}/${favId}.json`, favorites);
       return response.data;
     }catch(error){
       return error;
