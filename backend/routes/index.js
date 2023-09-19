@@ -206,5 +206,41 @@ router.put('/user/book/edit', (req, res)=>{
   });
 });
 
+router.get('/user/favorites', (req, res)=>{
+  const currentUser = authController.getUser();
+  if (!currentUser){
+    res.status(401).json({error: 'Unauthorized'});
+  }
+  bookController.getFavorites(req.body.userId).then((response)=>{
+    res.status(200).json(response);
+  }).catch((error) => {
+    res.status(404).json({data: error.data});
+  });
+});
+
+router.put('/user/favorites/edit', (req, res)=>{
+  const currentUser = authController.getUser();
+  if (!currentUser){
+    res.status(401).json({error: 'Unauthorized'});
+  }
+  const {userId, favId, favorites} = req.body;
+  bookController.editFavorites(userId, favId, favorites).then((response)=>{
+    res.status(200).json(response);
+  }).catch((error) => {
+    res.status(404).json({data: error.data});
+  });
+});
+
+router.delete('/user/favorites/delete', (req, res)=>{
+  const currentUser = authController.getUser();
+  if (!currentUser){
+    res.status(401).json({error: 'Unauthorized'});
+  }
+  bookController.deleteFavorites(req.body.userId).then((response)=>{
+    res.status(200).json(response);
+  }).catch((error) => {
+    res.status(404).json({data: error.data});
+  });
+})
 
 module.exports = router;

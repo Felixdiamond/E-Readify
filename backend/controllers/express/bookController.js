@@ -29,6 +29,21 @@ class BookController{
     await this.storage.deleteBook(remotePath);
     return {status: 'deleted'};
   }
+
+  async editFavorites(userId, favId, favorites){
+    const response = await this.preStorage.editUserFavorites(userId, favId, favorites);
+    return response;
+  }
+
+  async getFavorites(userId){
+    const response = await this.preStorage.getUserFavorites(userId);
+    return response;
+  }
+
+  async deleteFavorites(userId){
+    const response = await this.preStorage.deleteUserFavorites(userId);
+    return response;
+  }
 }
 
 module.exports = BookController;

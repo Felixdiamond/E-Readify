@@ -8,10 +8,12 @@ const {
   sendEmailVerification,
   sendPasswordResetEmail,
 } = require('firebase/auth');
+const bookDetails = require('../firebase/bookDetailsController');
 
 class FirebaseAuthController {
   constructor() {
     this.auth = getAuth();
+    this.storeFavorites = new bookDetails();
   }
 
   async createUser(customUser) {
@@ -28,8 +30,10 @@ class FirebaseAuthController {
       await updateProfile(user, {
         displayName: `${firstName} ${lastName}`,
         photoURL: avatarUrl
-      }).then((_)=>{
-        
+      }).then(async (_)=>{
+        await this.storeFavorites.postUserFavorites(user.uid, favorites);
+      }).catch((error)=>{
+        return error;
       });
     //   const db = yourFirestoreInstance; // Initialize Firestore as needed
     // await db.collection('users').doc(user.uid).set({ favorites });

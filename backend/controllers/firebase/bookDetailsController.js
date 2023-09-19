@@ -102,6 +102,54 @@ class BookDetailsController{
       return error
     }
   }
+
+  async postUserFavorites(userId, favorites){
+    if (!userId || !favorites){
+      return {error: 'missing parameters'};
+    }
+    try{
+      const response = await axios.post(`${this.BASEURL}/favorites/${userId}.json`, favorites);
+      return response.data;
+    }catch(error){
+      return error;
+    }
+  }
+
+  async editUserFavorites(userId, favorites){
+    if (!userId || !favorites){
+      return {error: 'missing parameters'};
+    }
+    try{
+      const response = await axios.put(`${this.BASEURL}/favorites/${userId}.json`, favorites);
+      return response.data;
+    }catch(error){
+      return error;
+    }
+  }
+
+  async getUserFavorites(userId){
+    if (!userId){
+      return {error: 'missing parameters'};
+    }
+    try{
+      const response = await axios.get(`${this.BASEURL}/favorites/${userId}.json`);
+      return response.data;
+    }catch(error){
+      return error;
+    }
+  }
+
+  async deleteUserFavorites(userId){
+    if (!userId){
+      return {error: 'missing parameters'};
+    }
+    try{
+      await axios.delete(`${this.BASEURL}/favorites/${userId}.json`);
+      return {status: 'favorites deleted'};
+    }catch(error){
+      return error;
+    }
+  }
 }
 
 
