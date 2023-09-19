@@ -28,6 +28,8 @@ class FirebaseAuthController {
       await updateProfile(user, {
         displayName: `${firstName} ${lastName}`,
         photoURL: avatarUrl
+      }).then((_)=>{
+        
       });
     //   const db = yourFirestoreInstance; // Initialize Firestore as needed
     // await db.collection('users').doc(user.uid).set({ favorites });
@@ -44,7 +46,7 @@ class FirebaseAuthController {
     try{
       const user = this.auth.currentUser;
       if (!user){
-        return {};
+        return user;
       }
       return {
         id: user.uid,

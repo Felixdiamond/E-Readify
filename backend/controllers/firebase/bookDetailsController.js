@@ -14,8 +14,8 @@ class BookDetailsController{
 
   async getAllBooksInfo(){
     try {
-      const booksObject = await axios.get(`${this.BASEURL}.json`);
-      return booksObject;
+      const booksObject = await axios.get(`${this.BASEURL}/books.json`);
+      return booksObject.data;
     }catch(error){
       return error;
     }
@@ -26,8 +26,9 @@ class BookDetailsController{
       return {error: 'missing user_id'};
     }
     try{
-      const myBooks = await axios.get(`${this.BASEURL}/${this.userId}.json`);
-      return myBooks;
+      const myBooks = await axios.get(`${this.BASEURL}/books/${this.userId}.json`);
+      console.log(myBooks.data)
+      return myBooks.data;
     }catch(error){
       return error;
     }
@@ -38,7 +39,7 @@ class BookDetailsController{
       return {error: 'missing user_id'};
     }
     try{
-      await axios.delete(`${this.BASEURL}/${userId}.json`);
+      await axios.delete(`${this.BASEURL}/books/${userId}.json`);
       return {status: 'infos deleted'};
     }catch(error){
       return error;
@@ -46,7 +47,6 @@ class BookDetailsController{
   }
 
   async uploadBookInfo(bookDetails, userId){
-    console.log(bookDetails, userId);
     if (!bookDetails || !userId){
       return {error: 'bad request'};
     }
@@ -68,7 +68,7 @@ class BookDetailsController{
       return {error: 'missing user_id or book_id'};
     }
     try{
-      const bookDetails = await axios.get(`${this.BASEURL}/${userId}/${bookId}.json`);
+      const bookDetails = await axios.get(`${this.BASEURL}/books/${userId}/${bookId}.json`);
       return bookDetails;
     }
     catch(error){
@@ -85,7 +85,7 @@ class BookDetailsController{
         return {error: 'missing book information'};
       }
       try{
-        const response = await axios.put(`${this.BASEURL}/${userId}/${this.bookId}.json`, bookInfo);
+        const response = await axios.put(`${this.BASEURL}/books/${userId}/${this.bookId}.json`, bookInfo);
         return response;
       }catch(error){
         return error;
@@ -97,7 +97,7 @@ class BookDetailsController{
       return {error: 'missing user_id or book_id'};
     }
     try{
-      await axios.delete(`${this.BASEURL}/${userId}/${bookId}.json`);
+      await axios.delete(`${this.BASEURL}/books/${userId}/${bookId}.json`);
       return {status: 'info deleted'};
     }catch(error){
       return error

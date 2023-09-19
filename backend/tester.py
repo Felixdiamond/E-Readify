@@ -6,7 +6,7 @@ file_path = sys.argv[1]
 file_name = file_path.split('/')[-1]
 print(file_path)
     
-request_json = {'localPath': file_path, 'remotePath': 'pdfs/{}'.format(file_name)}
+# request_json = {'localPath': file_path, 'remotePath': 'pdfs/{}'.format(file_name)}
 
 response = requests.post("http://127.0.0.1:4000/user/login", json={'email': sys.argv[1], 'password':sys.argv[2]})
 print('login test: ', response.text)
@@ -29,21 +29,25 @@ bookmodel = {
 }
 
 r_json = {
-    'bookInfo': bookmodel,
+    # 'bookInfo': bookmodel,
     'userId': response.json()['id']
 }
 
 # new = requests.get("http://127.0.0.1:4000/all-books")
 # print(new.text)
-print(r_json)
-new = requests.post("http://127.0.0.1:4000/user/post-book", json=r_json)
-resp = new.json()
+# print(r_json)
+# new = requests.post("http://127.0.0.1:4000/user/post-book", json=r_json)
+# resp = new.json()
 
 del_payload = {
-    'bookId': resp['pdfInfo']['id'],
-    'userId': response.json()['id'],
-    'remotePath': resp['remotePath']
+    # 'bookId': '-NeiSmOk9wdUs5CV_1l9',
+    # 'userId': 'Xv2tBod1GxbiNo5dxCjOrKfg9eo2',
+    'localPath': 'mongo.pdf',
+    'remotePath': 'pdfs/Xv2tBod1GxbiNo5dxCjOrKfg9eo2/-NeiSmOk9wdUs5CV_1l9/mongo.pdf'
 }
-print(del_payload)
-new = requests.delete("http://127.0.0.1:4000/user/delete-book", json=del_payload)
+# print(del_payload)
+# new = requests.delete("http://127.0.0.1:4000/user/delete-book", json=del_payload)
+# print(new.text)
+
+new = requests.get("http://127.0.0.1:4000/user/all-books", json=r_json)
 print(new.text)

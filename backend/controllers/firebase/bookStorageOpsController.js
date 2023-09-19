@@ -29,6 +29,9 @@ class BookStorageOpsController{
         return {error: "missing file paths"};
       }
       const file = this.storageBucket.file(remotePath);
+      if (!file){
+        return {error: 'file not found'};
+      }
       file.createReadStream().
       on('error', (error) => {
         console.log(error);
@@ -47,6 +50,9 @@ class BookStorageOpsController{
         return {error: "missing file paths"};
       }
       const file = this.storageBucket.file(remotePath);
+      if (!file){
+        return {error: 'file not found'};
+      }
       await file.delete();
       return {'status': 'file deleted'};
     }catch(error){

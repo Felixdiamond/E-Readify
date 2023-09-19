@@ -25,9 +25,9 @@ class BookController{
   }
 
   async deleteBook(bookId, userId, remotePath){
-    const resp = await this.preStorage.deleteBookInfo(userId, bookId);
-    const response = await this.storage.deleteBook(remotePath);
-    return {bookInfo: resp, fileInfo: response};
+    await this.preStorage.deleteBookInfo(userId, bookId);
+    await this.storage.deleteBook(remotePath);
+    return {status: 'deleted'};
   }
 }
 

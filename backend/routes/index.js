@@ -140,7 +140,7 @@ router.get('/user/get-book', (req, res) => {
   bookController.getBook(req.body).then((response)=>{
     res.status(200).json(response);
   }).catch((error) => {
-    res.status(error.status).json({data: error.data});
+    res.status(404).json({data: error.data});
   });
 });
 
@@ -151,7 +151,7 @@ router.delete('/user/delete-book', (req, res) => {
   }
   const {bookId, userId, remotePath} = req.body;
   bookController.deleteBook(bookId, userId, remotePath).then((response)=>{
-    res.status(200).json(response);
+    res.json(response);
   }).catch((error) => {
     res.status(error.status).json({data: error.data});
   });
@@ -165,7 +165,7 @@ router.get('/all-books', (req, res)=>{
   bookDetails.getAllBooksInfo().then((response)=>{
     res.status(200).json(response);
   }).catch((error) => {
-    res.status(error.status).json({data: error.data});
+    res.status(404).json({data: error.data});
   });
 });
 
@@ -174,10 +174,11 @@ router.get('/user/all-books', (req, res)=>{
   if (!currentUser){
     res.status(401).json({error: 'Unauthorized'});
   }
+  console.log(req.body.userId);
   bookDetails.getAllUserBooksInfo(req.body.userId).then((response)=>{
     res.status(200).json(response);
   }).catch((error) => {
-    res.status(error.status).json({data: error.data});
+    res.status(404).json({data: error.data});
   });
 });
 
@@ -190,7 +191,7 @@ router.get('/user/book', (req, res)=>{
   bookDetails.getBookInfo(userId, bookId).then((response)=>{
     res.status(200).json(response);
   }).catch((error) => {
-    res.status(error.status).json({data: error.data});
+    res.status(404).json({data: error.data});
   });
 });
 
@@ -203,7 +204,7 @@ router.patch('/user/book/edit', (req, res)=>{
   bookDetails.editBookInfo(bookInfo, userId, bookId).then((response)=>{
     res.status(200).json(response);
   }).catch((error) => {
-    res.status(error.status).json({data: error.data});
+    res.status(404).json({data: error.data});
   });
 });
 
