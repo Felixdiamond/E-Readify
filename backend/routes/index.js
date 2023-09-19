@@ -20,7 +20,6 @@ router.post('/user/register', (req, res) => {
 });
 
 router.post('/user/login',(req, res) => {
-  console.log(req.body);
   authController.logIn(req.body).then(response => {
     res.status(200).json(response);
   })
@@ -174,7 +173,6 @@ router.get('/user/all-books', (req, res)=>{
   if (!currentUser){
     res.status(401).json({error: 'Unauthorized'});
   }
-  console.log(req.body.userId);
   bookDetails.getAllUserBooksInfo(req.body.userId).then((response)=>{
     res.status(200).json(response);
   }).catch((error) => {
@@ -195,7 +193,7 @@ router.get('/user/book', (req, res)=>{
   });
 });
 
-router.patch('/user/book/edit', (req, res)=>{
+router.put('/user/book/edit', (req, res)=>{
   const currentUser = authController.getUser();
   if (!currentUser){
     res.status(401).json({error: 'Unauthorized'});

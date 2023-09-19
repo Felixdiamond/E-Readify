@@ -21,21 +21,22 @@ bookmodel = {
     'title': 'my test book',
     'description': 'little mongo db',
     'addedDate': '10:04pm',
-    'author': 'me',
-    'rating': 5,
+    'author': 'testing',
+    'rating': 3,
     'genres': 'programming',
-    'pages': 100,
+    'pages': 10,
     'localPath': sys.argv[3]
 }
 
 r_json = {
-    # 'bookInfo': bookmodel,
-    'userId': response.json()['id']
+    'bookInfo': bookmodel,
+    'userId': response.json()['id'],
+    'bookId': "-NeiXWScF21qnNHTf-RX",
 }
 
 # new = requests.get("http://127.0.0.1:4000/all-books")
 # print(new.text)
-# print(r_json)
+print(r_json)
 # new = requests.post("http://127.0.0.1:4000/user/post-book", json=r_json)
 # resp = new.json()
 
@@ -49,5 +50,5 @@ del_payload = {
 # new = requests.delete("http://127.0.0.1:4000/user/delete-book", json=del_payload)
 # print(new.text)
 
-new = requests.get("http://127.0.0.1:4000/user/all-books", json=r_json)
+new = requests.put("http://127.0.0.1:4000/user/book/edit", json=r_json)
 print(new.text)
