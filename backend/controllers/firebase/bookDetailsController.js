@@ -9,7 +9,7 @@ dotenv.config();
 class BookDetailsController{
   constructor(){
     this.BASEURL = process.env.DATABASE_URL;
-    this.userController = new authController();
+    this.userController = authController;
   }
 
   async getAllBooksInfo(){
