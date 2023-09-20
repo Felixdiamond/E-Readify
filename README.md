@@ -117,7 +117,7 @@ The E-Readify backend provides APIs for books management and user management whi
         firstName: 'myFirstName',
         lastName: 'myLastName'
     }
-    const response = request.patch('myserverurl/user', objectToAdd);
+    const response = request.patch('myserverurl/user/edit', objectToAdd);
     console.log(response); //returns the same response as /user
     //the output
     {
