@@ -28,10 +28,10 @@ class AuthController{
   }
 
   async deleteUser(userId){
-    const response = await this.bookDetails.deleteAllUserBooksInfo(userId).then(async (_)=>{
+    await this.bookDetails.deleteAllUserBooksInfo(userId).then(async (_)=>{
       await this.firebaseAuth.deleteUser();
     });
-    return response;
+    return {response: 'file deleted'};
   }
 
   async logIn(credentials){

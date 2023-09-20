@@ -130,9 +130,10 @@ class FirebaseAuthController {
       const user = this.getCurrentUser();
       if (user){
         await sendEmailVerification(user);
+        return {emailStatus: 'verification email sent'};
       }
       else{
-        return {"error": "user is not logged in"};
+        return {error: "user is not logged in"};
       }
     }catch(error){
       return error;

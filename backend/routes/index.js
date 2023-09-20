@@ -15,7 +15,7 @@ router.post('/user/register', (req, res) => {
     res.status(200).json(response);
   })
   .catch(error => {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error });
   });
 });
 
@@ -24,7 +24,7 @@ router.post('/user/login',(req, res) => {
     res.status(200).json(response);
   })
   .catch(error => {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error});
   });
 });
 
@@ -38,7 +38,7 @@ router.get('/user/logout', (req, res) => {
       res.json(response);
     })
     .catch(error => {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ error: error });
     });
 });
 
@@ -57,7 +57,7 @@ router.patch('/user/edit', (req, res) => {
       res.status(200).json(user);
     })
     .catch(error => {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ error: error });
     });
 });
 
@@ -71,7 +71,7 @@ router.get('/user/delete', (req, res) => {
       res.status(200).json(user);
     })
     .catch(error => {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ error: error });
     });
 });
 
@@ -85,7 +85,7 @@ router.get('/user/verify', (req, res) => {
       res.status(200).json(verify);
     })
     .catch(error => {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ error: error });
     });
 });
 
@@ -99,7 +99,7 @@ router.get('/user/reset-password', (req, res) => {
       res.status(200).json(resetPassword);
     })
     .catch(error => {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ error: error });
     });
 });
 
@@ -111,7 +111,7 @@ router.get('/user/verification-status', (req, res) => {
   authController.getverificationStatus().then((response)=>{
     res.status(200).json(response);
   }).catch((error) => {
-    res.status(error.status).json({data: error.data});
+    res.status(401).json({data: error });
   });
 });
 
@@ -127,7 +127,7 @@ router.post('/user/post-book', (req, res) => {
   bookController.postBook(details, userId).then((response)=>{
     res.status(200).json(response);
   }).catch((error) => {
-    res.json({data: error.data});
+    res.status(404).json({data: error});
   });
 });
 
@@ -139,7 +139,7 @@ router.get('/user/get-book', (req, res) => {
   bookController.getBook(req.body).then((response)=>{
     res.status(200).json(response);
   }).catch((error) => {
-    res.status(404).json({data: error.data});
+    res.status(404).json({data: error});
   });
 });
 
@@ -152,7 +152,7 @@ router.delete('/user/delete-book', (req, res) => {
   bookController.deleteBook(bookId, userId, remotePath).then((response)=>{
     res.json(response);
   }).catch((error) => {
-    res.status(error.status).json({data: error.data});
+    res.status(404).json({data: error});
   });
 });
 
@@ -164,7 +164,7 @@ router.get('/all-books', (req, res)=>{
   bookDetails.getAllBooksInfo().then((response)=>{
     res.status(200).json(response);
   }).catch((error) => {
-    res.status(404).json({data: error.data});
+    res.status(404).json({data: error});
   });
 });
 
@@ -176,7 +176,7 @@ router.get('/user/all-books', (req, res)=>{
   bookDetails.getAllUserBooksInfo(req.body.userId).then((response)=>{
     res.status(200).json(response);
   }).catch((error) => {
-    res.status(404).json({data: error.data});
+    res.status(404).json({data: error});
   });
 });
 
@@ -189,7 +189,7 @@ router.get('/user/book', (req, res)=>{
   bookDetails.getBookInfo(userId, bookId).then((response)=>{
     res.status(200).json(response);
   }).catch((error) => {
-    res.status(404).json({data: error.data});
+    res.status(404).json({data: error});
   });
 });
 
@@ -202,11 +202,11 @@ router.put('/user/book/edit', (req, res)=>{
   bookDetails.editBookInfo(bookInfo, userId, bookId).then((response)=>{
     res.status(200).json(response);
   }).catch((error) => {
-    res.status(404).json({data: error.data});
+    res.status(404).json({data: error});
   });
 });
 
-router.get('/user/favorites', (req, res)=>{
+router.get('/user/books/favorites', (req, res)=>{
   const currentUser = authController.getUser();
   if (!currentUser){
     res.status(401).json({error: 'Unauthorized'});
@@ -214,11 +214,11 @@ router.get('/user/favorites', (req, res)=>{
   bookController.getFavorites(req.body.userId).then((response)=>{
     res.status(200).json(response);
   }).catch((error) => {
-    res.status(404).json({data: error.data});
+    res.status(404).json({data: error});
   });
 });
 
-router.put('/user/favorites/edit', (req, res)=>{
+router.put('/user/books/favorites/edit', (req, res)=>{
   const currentUser = authController.getUser();
   if (!currentUser){
     res.status(401).json({error: 'Unauthorized'});
@@ -227,11 +227,11 @@ router.put('/user/favorites/edit', (req, res)=>{
   bookController.editFavorites(userId, favId, favorites).then((response)=>{
     res.status(200).json(response);
   }).catch((error) => {
-    res.status(404).json({data: error.data});
+    res.status(404).json({data: error});
   });
 });
 
-router.delete('/user/favorites/delete', (req, res)=>{
+router.delete('/user/books/favorites/delete', (req, res)=>{
   const currentUser = authController.getUser();
   if (!currentUser){
     res.status(401).json({error: 'Unauthorized'});
@@ -239,7 +239,7 @@ router.delete('/user/favorites/delete', (req, res)=>{
   bookController.deleteFavorites(req.body.userId).then((response)=>{
     res.status(200).json(response);
   }).catch((error) => {
-    res.status(404).json({data: error.data});
+    res.status(404).json({data: error });
   });
 })
 

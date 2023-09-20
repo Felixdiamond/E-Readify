@@ -37,7 +37,7 @@ class BookStorageOpsController{
         console.log(error);
         return error;
       }).on('end', ()=>{
-      return {'status': 'file downloaded successfully'};
+      return {status: 'file downloaded successfully'};
       }).pipe(fs.createWriteStream(localPath));
     }catch(error){
       return error;
