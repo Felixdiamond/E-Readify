@@ -106,3 +106,23 @@ The E-Readify backend provides APIs for books management and user management whi
     // console.log(response); returns null if there is no user logged in at the moment
     // returns error on failure
 ```
+
+- ### PATCH  /user/edit
+   - edit the returns a current snapshot of the logged in user.
+
+
+```c
+    const objectToAdd = {
+        photoUrl: 'photourl.google.com.jpg'
+        firstName: 'myFirstName',
+        lastName: 'myLastName'
+    }
+    const response = request.patch('myserverurl/user', objectToAdd);
+    console.log(response); //returns the same response as /user
+    //the output
+    {
+        id: 'userId',
+        verified: 'true/false',
+    }
+    // returns error on failure
+```
