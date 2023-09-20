@@ -59,6 +59,25 @@ class BookStorageOpsController{
       return error;
     }
   }
+
+  async deleteFolder(remoteFolder){
+    try{
+      if (!remoteFolder){
+        return {error: 'missing file folder'}
+      }
+      const [files] = await this.storageBucket.getFiles({ prefix: remoteFolder });
+      const deletePromises = [];
+
+      for (const file of files) {
+        deletePromises.push(file.delete());
+      }
+      await Promise.all(deletePromises);
+      await this.storageBucket.deleteFiles({ prefix: remoteFolder });
+      return {status: 'folder deleted'};
+    }catch(error){
+      return error;
+    }
+  }
 }
 
 module.exports = BookStorageOpsController;

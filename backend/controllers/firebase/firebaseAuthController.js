@@ -23,18 +23,17 @@ class FirebaseAuthController {
         return {'error': 'missing email or password'};
       }
       const credentials = await createUserWithEmailAndPassword(this.auth, email, password);
-      const { user } = credentials;
+      const {user}  = credentials;
       if (!avatarUrl || !firstName || !lastName || !favorites){
         return {'error': 'missing parameters'};
       }
-      await updateProfile(user, {
+      // const resp = await updateProfile(user, );
+      await this.updateUser({
         displayName: `${firstName} ${lastName}`,
         photoURL: avatarUrl
-      }).then(async (_)=>{
-        await this.storeFavorites.postUserFavorites(user.uid, favorites);
-      }).catch((error)=>{
-        return error;
       });
+      console.log(user.uid, favorites);
+      await this.storeFavorites.postUserFavorites(user.uid, favorites);
     //   const db = yourFirestoreInstance; // Initialize Firestore as needed
     // await db.collection('users').doc(user.uid).set({ favorites });
       return {
@@ -127,7 +126,7 @@ class FirebaseAuthController {
 
   async verifyUser(){
     try {
-      const user = this.getCurrentUser();
+      const user = this.auth.currentUser;
       if (user){
         await sendEmailVerification(user);
         return {emailStatus: 'verification email sent'};
@@ -143,7 +142,7 @@ class FirebaseAuthController {
   async resetPassword(email){
     try{
       await sendPasswordResetEmail(this.auth, email);
-      return {"status": "email sent"}
+      return {status: "reset password link sent"};
     } catch (error){
       return error;
     }

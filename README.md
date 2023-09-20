@@ -142,29 +142,15 @@ The APIs are now ready for use
 ```
 
 - ### DELETE  /user/delete
-   - delete current snapshot of the logged in user.
+   - takes in the user id and delete current snapshot of the logged in user and related files.
 
 
 ```c
-    const response = request.delete('myserverurl/user/delete');
+    const response = request.delete('myserverurl/user/delete', json={'userId': 'myId'});
     console.log(response);
     //the output
     {
         response: 'file deleted'
-    }
-    // returns error on failure
-```
-
-- ### GET  /user/verify
-   - sends email verification to verify the current user to gain access to the files.
-
-
-```c
-    const response = request.get('myserverurl/user/verify');
-    console.log(response);
-    //the output
-    {
-        emailStatus: 'verification email sent'
     }
     // returns error on failure
 ```

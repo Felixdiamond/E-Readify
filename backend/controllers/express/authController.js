@@ -1,5 +1,6 @@
 const firebaseAuthController = require('../firebase/firebaseAuthController');
 const bookDetailsController = require('../firebase/bookDetailsController');
+const pdfController = require('../firebase/bookStorageOpsController');
 
 
 
@@ -7,6 +8,7 @@ class AuthController{
   constructor(){
     this.firebaseAuth = new firebaseAuthController();
     this.bookDetails = new bookDetailsController();
+    this.pdfStorage =new pdfController();
   }
 
   async addUser(credentials){
@@ -29,9 +31,12 @@ class AuthController{
 
   async deleteUser(userId){
     await this.bookDetails.deleteAllUserBooksInfo(userId).then(async (_)=>{
+      await this.bookDetails.deleteUserFavorites(userId);
+      const remoteFolder = `pdfs/${userId}`;
+      await this.pdfStorage.deleteFolder(remoteFolder);
       await this.firebaseAuth.deleteUser();
     });
-    return {response: 'file deleted'};
+    return {response: 'user deleted'};
   }
 
   async logIn(credentials){
@@ -49,8 +54,8 @@ class AuthController{
     return response;
   }
 
-  async resetPassword(){
-    const response = await this.firebaseAuth.resetPassword();
+  async resetPassword(email){
+    const response = await this.firebaseAuth.resetPassword(email);
     return response;
   }
 }

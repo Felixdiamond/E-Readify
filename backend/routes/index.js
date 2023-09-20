@@ -13,7 +13,8 @@ const bookDetails = new BookDetailsController();
 // authentication middleware
 const isAuthenticated = (req, res, next) => {
   const currentUser = authController.getUser();
-  if (!currentUser) {
+  const verified = authController.getverificationStatus();
+  if (!currentUser || !verified) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
   next();
@@ -62,8 +63,8 @@ router.patch('/user/edit', isAuthenticated, (req, res) => {
     });
 });
 
-router.get('/user/delete', isAuthenticated, (req, res) => {
-  authController.deleteUser()
+router.delete('/user/delete', isAuthenticated, (req, res) => {
+  authController.deleteUser(req.body.userId)
     .then(user => {
       res.status(200).json(user);
     })
@@ -72,7 +73,7 @@ router.get('/user/delete', isAuthenticated, (req, res) => {
     });
 });
 
-router.get('/user/verify', isAuthenticated, (req, res) => {
+router.get('/user/verify', (req, res) => {
   authController.verifyUser()
     .then(verify => {
       res.status(200).json(verify);
@@ -83,7 +84,7 @@ router.get('/user/verify', isAuthenticated, (req, res) => {
 });
 
 router.get('/user/reset-password', isAuthenticated, (req, res) => {
-  authController.resetPassword()
+  authController.resetPassword(req.body.email)
     .then(resetPassword => {
       res.status(200).json(resetPassword);
     })
@@ -93,11 +94,8 @@ router.get('/user/reset-password', isAuthenticated, (req, res) => {
 });
 
 router.get('/user/verification-status', isAuthenticated, (req, res) => {
-  authController.getverificationStatus().then((response)=>{
+  const response = authController.getverificationStatus();
     res.status(200).json(response);
-  }).catch((error) => {
-    res.status(401).json({data: error });
-  });
 });
 
 // book routes
