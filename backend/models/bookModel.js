@@ -16,7 +16,7 @@ class BookModel{
       title: this.title,
       description: this.description,
       addedDate: this.addedDate,
-      imahePreviewUrl: this.imagePreviewUrl,
+      imagePreviewUrl: this.imagePreviewUrl,
       author: this.author,
       rating: this.rating,
       genres: this.genres,

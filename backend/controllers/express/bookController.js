@@ -18,6 +18,9 @@ class BookController{
     const imagePath = bookDetails.imagePreviewUrl;
     bookDetails.imagePreviewUrl = encodeImage(imagePath);
     const resp = await this.preStorage.uploadBookInfo(bookDetails, userId);
+    if (resp.error){
+      return {error: 'upload failed'};
+    }
     const remotePath = `pdfs/${userId}/${resp.id}/${bookDetails.localPath}`;
     const paths = {
       localPath: bookDetails.localPath,

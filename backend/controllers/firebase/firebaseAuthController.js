@@ -28,15 +28,14 @@ class FirebaseAuthController {
       if (!avatarUrl || !firstName || !lastName || !favorites){
         return {'error': 'missing parameters'};
       }
-      const encodedAvatarUrl = encodeImage(avatarUrl);
-      await this.updateUser({
+      await updateProfile(user, {
         displayName: `${firstName} ${lastName}`,
-        photoURL: encodedAvatarUrl
+        photoURL: avatarUrl
+      }).then(async () => {
+        await this.storeFavorites.postUserFavorites(user.uid, favorites);
+      }).catch((error)=>{
+        return error;
       });
-      console.log(user.uid, favorites);
-      await this.storeFavorites.postUserFavorites(user.uid, favorites);
-    //   const db = yourFirestoreInstance; // Initialize Firestore as needed
-    // await db.collection('users').doc(user.uid).set({ favorites });
       return {
         id: user.uid,
         verifiedUser: user.emailVerified,
@@ -55,7 +54,7 @@ class FirebaseAuthController {
       return {
         id: user.uid,
         verified: user.emailVerified,
-        data: [user.providerData[0].displayName, user.providerData[0].photoURL]
+        data: [user.displayName, user.photoURL],
       };
     }
     catch(error){
@@ -71,12 +70,17 @@ class FirebaseAuthController {
     return false;
   }
 
-  async updateUser(data) {
+  async updateUser(displayName, photoURL) {
     try {
+      if (!displayName || !photoURL){
+        return {error: 'missing update parameter'}
+      }
       const user = this.auth.currentUser;
-      if (user && data){
-        const userData = {...user, ...data}
-        await updateProfile(user, userData);
+      if (user){
+        await updateProfile(user, {
+          photoURL: photoURL,
+          displayName: displayName
+        });
         const updatedUser = this.getCurrentUser();
         return updatedUser;
       }
@@ -91,7 +95,6 @@ class FirebaseAuthController {
   async deleteUser() {
     try {
       const user = this.auth.currentUser;
-      console.log(user);
       await deleteUser(user);
       return {'status': 'deleted'}
     } catch (error) {

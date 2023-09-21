@@ -17,7 +17,7 @@ class BookStorageOpsController{
       const response = await this.storageBucket.upload(localPath, {
       destination: remotePath
       });
-      return {status: 'file successfully uploaded', response: response};
+      return {status: 'file successfully uploaded', response: response.name};
     }catch(error){
       return error;
     }

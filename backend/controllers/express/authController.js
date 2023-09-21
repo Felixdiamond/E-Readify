@@ -20,8 +20,8 @@ class AuthController{
     return this.firebaseAuth.getCurrentUser();
   }
 
-  async updateUser(data){
-    const response = await this.firebaseAuth.updateUser(data);
+  async updateUser(displayName, photoURL){
+    const response = await this.firebaseAuth.updateUser(displayName, photoURL);
     return response;
   }
 
