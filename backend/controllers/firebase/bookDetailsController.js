@@ -27,7 +27,6 @@ class BookDetailsController{
     }
     try{
       const myBooks = await axios.get(`${this.BASEURL}/books/${userId}.json`);
-      console.log(myBooks.data)
       return myBooks.data;
     }catch(error){
       return error;
