@@ -50,7 +50,7 @@ The APIs are now ready for use
     const userModel = CustomUser(
         email: 'testEmail@gmail.com',
         password: 'testpassword',
-        photoUrl: 'photourl.google.com.jpg'
+        photoUrl: 'path/to/my/image.jpg'
         firstName: 'myFirstName',
         lastName: 'myLastName',
         favorites: [lets have an empty list that stores the id of favorite books later]
@@ -127,7 +127,7 @@ The APIs are now ready for use
 
 ```c
     const objectToAdd = {
-        photoUrl: 'photourl.google.com.jpg'
+        photoUrl: 'path/to/my/image.jpg'
         firstName: 'myFirstName',
         lastName: 'myLastName'
     }
@@ -206,6 +206,7 @@ The APIs are now ready for use
         'title': 'my test book',
         'description': 'little mongo db',
         'addedDate': '10:04pm',
+        'imagePreviewUrl': 'path/to/preview/image.png',
         'author': 'testing',
         'rating': 3,
         'genres': 'programming',
