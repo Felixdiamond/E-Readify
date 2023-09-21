@@ -1,5 +1,6 @@
-const storageOpsController = require('../firebase/bookStorageOpsController');
+const storageOpsController = require('../firebase/storageOpsController');
 const bookDetailsController = require('../firebase/bookDetailsController');
+const encodeImage = require('../../utils/imageProcessor');
 
 
 class BookController{
@@ -14,6 +15,8 @@ class BookController{
   }
 
   async postBook(bookDetails, userId){
+    const imagePath = bookDetails.imagePreviewUrl;
+    bookDetails.imagePreviewUrl = encodeImage(imagePath);
     const resp = await this.preStorage.uploadBookInfo(bookDetails, userId);
     const remotePath = `pdfs/${userId}/${resp.id}/${bookDetails.localPath}`;
     const paths = {

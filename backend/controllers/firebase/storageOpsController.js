@@ -1,5 +1,6 @@
 const fs = require('fs');
 const admin = require('../../admin');
+const {Readable} = require('stream');
 
 
 class BookStorageOpsController{
@@ -16,7 +17,7 @@ class BookStorageOpsController{
       const response = await this.storageBucket.upload(localPath, {
       destination: remotePath
       });
-      return {status: 'file successfully uploaded'};
+      return {status: 'file successfully uploaded', response: response};
     }catch(error){
       return error;
     }
@@ -39,6 +40,23 @@ class BookStorageOpsController{
       }).on('end', ()=>{
       return {status: 'file downloaded successfully'};
       }).pipe(fs.createWriteStream(localPath));
+    }catch(error){
+      return error;
+    }
+  }
+
+  async readBook(remotePath){
+    try{
+      if (!remotePath){
+        return {error: 'missing file path'};
+      }
+      const file = this.storageBucket.file(remotePath);
+      if (!file){
+        return {error: 'file not found'};
+      }
+      const stream = file.createReadStream();
+      const contentStream = new Readable().wrap(stream);
+      return {status: 'OK', content: contentStream};
     }catch(error){
       return error;
     }

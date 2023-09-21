@@ -1,6 +1,6 @@
 const firebaseAuthController = require('../firebase/firebaseAuthController');
 const bookDetailsController = require('../firebase/bookDetailsController');
-const pdfController = require('../firebase/bookStorageOpsController');
+const pdfController = require('../firebase/storageOpsController');
 
 
 

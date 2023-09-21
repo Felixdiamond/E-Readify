@@ -9,6 +9,7 @@ const {
   sendPasswordResetEmail,
 } = require('firebase/auth');
 const bookDetails = require('../firebase/bookDetailsController');
+const encodeImage = require('../../utils/imageProcessor');
 
 class FirebaseAuthController {
   constructor() {
@@ -27,10 +28,10 @@ class FirebaseAuthController {
       if (!avatarUrl || !firstName || !lastName || !favorites){
         return {'error': 'missing parameters'};
       }
-      // const resp = await updateProfile(user, );
+      const encodedAvatarUrl = encodeImage(avatarUrl);
       await this.updateUser({
         displayName: `${firstName} ${lastName}`,
-        photoURL: avatarUrl
+        photoURL: encodedAvatarUrl
       });
       console.log(user.uid, favorites);
       await this.storeFavorites.postUserFavorites(user.uid, favorites);

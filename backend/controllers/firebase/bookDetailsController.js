@@ -50,8 +50,8 @@ class BookDetailsController{
     if (!bookDetails || !userId){
       return {error: 'bad request'};
     }
-    const {title, description, addedDate, author, rating, genres, pages, localPath} = bookDetails;
-    if (!title || !description || !addedDate || !rating || !author || !genres || !pages || !localPath){
+    const {title, description, addedDate, imagePreviewUrl, author, rating, genres, pages, localPath} = bookDetails;
+    if (!title || !description || !addedDate || !rating || !author || !genres || !pages || !localPath || !imagePreviewUrl){
       return {error: 'incomplete book information'};
     }
     try{

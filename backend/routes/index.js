@@ -20,6 +20,7 @@ const isAuthenticated = (req, res, next) => {
   next();
 };
 
+//routes
 router.post('/user/register', (req, res) => {
   authController.addUser(req.body).then(response => {
     res.status(200).json(response);
