@@ -127,9 +127,8 @@ The APIs are now ready for use
 
 ```c
     const objectToAdd = {
+        displayName: 'myFirstName',
         photoUrl: 'path/to/my/image.jpg'
-        firstName: 'myFirstName',
-        lastName: 'myLastName'
     }
     const response = request.patch('myserverurl/user/edit', objectToAdd);
     console.log(response); //returns the same response as /user
