@@ -407,6 +407,22 @@ The APIs are now ready for use
     // returns error on failure
 ```
 
+- ### GET  /read-book
+   - read the book content, it returns the content of the book in a readable stream.
+
+
+```c
+    const resp = requests.get('/user/book', {'userId': 'myId', 'bookId': 'book id'});
+    const remotePath = `pdfs/${userId}/${bookId}/${resp.localPath}`;
+    const response = request.get('myserverurl/user/books/favorites/delete', remotePath);
+    console.log(response);
+    //the output
+    {
+       ................. readable stream
+    }
+    // returns error on failure
+```
+
 # Authors
 - Jimoh Qudus (engineerphoenix1@gmail.com)
 - Felix Dawodu (diamondfelix006@hmail.com)

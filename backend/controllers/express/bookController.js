@@ -14,6 +14,11 @@ class BookController{
     return book;
   }
 
+  async readBook(remotepath){
+    const contentJson = await this.storage.readBook(remotepath);
+    return contentJson;
+  }
+
   async postBook(bookDetails, userId){
     const imagePath = bookDetails.imagePreviewUrl;
     bookDetails.imagePreviewUrl = encodeImage(imagePath);
@@ -33,6 +38,13 @@ class BookController{
   async deleteBook(bookId, userId, remotePath){
     await this.preStorage.deleteBookInfo(userId, bookId);
     await this.storage.deleteBook(remotePath);
+    return {status: 'deleted'};
+  }
+
+  async deleteAllUserBooks(remoteFolder){
+    await this.storage.deleteFolder(remoteFolder);
+    const userId = remoteFolder.split('/')[1];
+    await this.preStorage.deleteAllUserBooksInfo(userId);
     return {status: 'deleted'};
   }
 

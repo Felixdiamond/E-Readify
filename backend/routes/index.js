@@ -119,6 +119,14 @@ router.get('/user/get-book', isAuthenticated, (req, res) => {
   });
 });
 
+router.get('/read-book', isAuthenticated, (req, res) => {
+  bookController.readBook(req.body.remotePath).then((response)=>{
+    res.status(200).json(response);
+  }).catch((error)=>{
+    res.status(404).json({data: error});
+  });
+});
+
 router.delete('/user/delete-book', isAuthenticated, (req, res) => {
   const {bookId, userId, remotePath} = req.body;
   bookController.deleteBook(bookId, userId, remotePath).then((response)=>{
