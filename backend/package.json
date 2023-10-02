@@ -1,0 +1,29 @@
+{
+  "name": "e-readify-backend",
+  "version": "1.0.0",
+  "description": "A book reader website where readers can read books online",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "predev": "tsc models/customUser.ts",
+    "dev": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.5.0",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
+    "firebase": "^10.3.1",
+    "firebase-admin": "^11.10.1",
+    "jsonwebtoken": "^9.0.2",
+    "nodemon": "^3.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  }
+}

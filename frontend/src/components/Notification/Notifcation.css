@@ -1,0 +1,32 @@
+.notification {
+    position: fixed;
+    right: 0;
+    margin: 20px;
+    padding: 10px;
+    background-color: #444;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    animation: slide-in 0.5s forwards, fade-out 0.5s 2.5s forwards;
+  }
+  
+  @keyframes slide-in {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fade-out {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  
