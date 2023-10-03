@@ -12,6 +12,8 @@ E-Readify is a book reader website where readers can read books online. It featu
 - Firebase: We use Firebase for its real-time database and authentication features. This allows us to store user data securely and provide real-time updates to our users.
 - Next.js: We use Next.js for its server-side rendering capabilities and ease of deployment. This allows us to deliver fast, responsive pages to our users.
 - Node.js: We use Node.js as the runtime environment for our backend. This allows us to write server-side code in JavaScript, which is fast and efficient.
+- Express.js: We use Express.js for creating our custom APIs because of its simplicity and flexibility so that the APIs can be easily accessible for users.
+- Typescript: We use Typescript because Javascript is a loosely-typed language thus ensuring strict type annotation. 
 
 ## Future Plans
 We have many exciting features planned for E-Readify in the future! Some of these include:
