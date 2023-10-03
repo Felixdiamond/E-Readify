@@ -22,16 +22,18 @@ We have many exciting features planned for E-Readify in the future! Some of thes
 
 
 # E-Readify Backend APIs Documentation
-The E-Readify backend provides APIs for books management and user management which is documented below
+The E-Readify backend provides APIs for books management and user management which is documented below. Note that almost all end points return unathorized error for unverified users
 
 ## Installation
 To install E-Readify backend API services on a local machine, open your command line and type the following snippet. Ensure that you have node js already installed.
 
 ```c
-    npm install
+    git clone https://github.com/Felixdiamond/E-Readify.git
 ```
-After installation, run the following snippet
+After installation, navigate to the folder and run the following snippet
 ```c
+    cd E-readify/backend
+    npm install
     nodemon start
     .............
     server running on port ......
