@@ -31,21 +31,22 @@ router.post('/user/register', (req, res) => {
 });
 
 router.post('/user/login',(req, res) => {
-  authController.logIn(req.body).then(response => {
+  console.log(req.body);
+  authController.logIn(req.body).then((response) => {
     res.status(200).json(response);
   })
-  .catch(error => {
-    res.status(500).json({ error: error});
+  .catch((error) => {
+    res.status(500).json({ error});
   });
 });
 
 router.get('/user/logout', isAuthenticated, (req, res) => {
   authController.logOut()
-    .then(response => {
+    .then((response) => {
       res.json(response);
     })
-    .catch(error => {
-      res.status(500).json({ error: error });
+    .catch((error) => {
+      res.status(500).json({ error });
     });
 });
 
@@ -56,21 +57,21 @@ router.get('/user', isAuthenticated, (req, res) => {
 
 router.patch('/user/edit', isAuthenticated, (req, res) => {
   authController.updateUser(req.body.displayName, req.body.photoURL)
-    .then(user => {
+    .then((user) => {
       res.status(200).json(user);
     })
-    .catch(error => {
-      res.status(500).json({ error: error });
+    .catch((error) => {
+      res.status(500).json({ error });
     });
 });
 
 router.delete('/user/delete', (req, res) => {
   authController.deleteUser(req.body.userId)
-    .then(user => {
+    .then((user) => {
       res.status(200).json(user);
     })
-    .catch(error => {
-      res.status(500).json({ error: error });
+    .catch((error) => {
+      res.status(500).json({ error });
     });
 });
 

@@ -145,7 +145,12 @@ class FirebaseAuthController {
       if (!email || !password){
         return {error: 'invalid login credentials'};
       }
-      
+      if (
+        typeof email !== "string" ||
+        typeof password !== "string"
+      ){
+        return {error: "parameters must be strings"};
+      }
       const credentials = await signInWithEmailAndPassword(this.auth, email, password);
       const { user } = credentials;
       return {
