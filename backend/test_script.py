@@ -19,16 +19,15 @@ login_credentials = {
 new_user = {
     'email': email,
     'password': password,
-    'avatarUrl': image_path,
-    'firstName': 'John',
-    'lastName': 'Doe',
-    'favorites': ['id1']
+    'photoUrl': image_path,
+    'firstName': 1,
+    'lastName': 56,
 }
 
 
-# response = requests.post("http://127.0.0.1:4000/user/register", json=new_user)
-# print("[[*] new user ] ", response.text)
-# # # # # time.sleep(10)
+response = requests.post("http://127.0.0.1:4000/user/register", json=new_user)
+print("[[*] new user ] ", response.text)
+time.sleep(10)
 
 response = requests.post("http://127.0.0.1:4000/user/login", json=login_credentials)
 print("[[*] login test ]", response.text)
@@ -39,8 +38,8 @@ print("[[*] login test ]", response.text)
 # exit(0)
 # time.sleep(60)
 
-# response = requests.get('http://127.0.0.1:4000/user/verification-status')
-# print("[[*] GET test(verification) ]", response.text)
+response = requests.get('http://127.0.0.1:4000/user/verification-status')
+print("[[*] GET test(verification) ]", response.text)
 
 
 
