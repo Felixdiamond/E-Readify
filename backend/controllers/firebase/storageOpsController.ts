@@ -26,6 +26,7 @@ class BookStorageOpsController{
       ){
         return {error: "file paths must be strings"};
       }
+      console.log(remotePath, localPath);
       const response = await this.storageBucket.upload(localPath, {
       destination: remotePath
       });

@@ -171,6 +171,14 @@ router.put('/user/book/edit', isAuthenticated, (req, res)=>{
   });
 });
 
+router.delete('/user/delete-all-books', isAuthenticated, (req, res)=>{
+  bookController.deleteAllUserBooks(req.body.remoteFolder).then((response)=>{
+    res.status(200).json(response);
+  }).catch((error) => {
+    res.status(404).json({data: error});
+  });
+});
+
 router.get('/user/books/favorites', isAuthenticated, (req, res)=>{
   bookController.getFavorites(req.body.userId).then((response)=>{
     res.status(200).json(response);

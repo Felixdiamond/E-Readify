@@ -22,15 +22,19 @@ class BookController{
   async postBook(bookDetails, userId){
     const imagePath = bookDetails.imagePreviewUrl;
     bookDetails.imagePreviewUrl = encodeImage(imagePath);
+    const localPathCopy = bookDetails.localPath;
+    const path = bookDetails.localPath.split('/');
+    const trimmedPath = path[path.length - 1];
+    bookDetails.localPath = trimmedPath;
     const resp = await this.preStorage.uploadBookInfo(bookDetails, userId);
     if (resp.error){
       return {error: 'upload failed'};
     }
     const remotePath = `pdfs/${userId}/${resp.id}/${bookDetails.localPath}`;
     const paths = {
-      localPath: bookDetails.localPath,
+      localPath: localPathCopy,
       remotePath
-    }
+    };
     const response = await this.storage.uploadBook(paths);
     return {pdfDetails: response, pdfInfo: resp, remotePath};
   }

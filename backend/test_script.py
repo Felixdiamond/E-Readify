@@ -1,6 +1,6 @@
 import sys
 import requests
-import time
+import datetime
 
 user_id = None
 book_id = None
@@ -25,12 +25,13 @@ new_user = {
 }
 
 
-response = requests.post("http://127.0.0.1:4000/user/register", json=new_user)
-print("[[*] new user ] ", response.text)
-time.sleep(10)
+# response = requests.post("http://127.0.0.1:4000/user/register", json=new_user)
+# print("[[*] new user ] ", response.text)
+# time.sleep(10)
 
 response = requests.post("http://127.0.0.1:4000/user/login", json=login_credentials)
 print("[[*] login test ]", response.text)
+user_id = response.json()['id']
 # time.sleep(10)
 
 # response = requests.get("http://127.0.0.1:4000/user/verify")
@@ -49,10 +50,10 @@ print("[[*] GET test(verification) ]", response.text)
 
 # response = requests.post("http://127.0.0.1:4000/user/login", json=login_credentials)
 # print("[[*] login test ]", response.text)
-# user_id = response.json()['id']
 
-# response = requests.get("http://127.0.0.1:4000/user")
-# print("[[*] user test ]", response.text)
+
+response = requests.get("http://127.0.0.1:4000/user")
+print("[[*] user test ]", response.text)
 
 
 # response = requests.patch("http://127.0.0.1:4000/user/edit", json={'displayName': 'John Smith', 'photoURL': image_path})
@@ -67,29 +68,29 @@ print("[[*] GET test(verification) ]", response.text)
 # response = requests.get("http://127.0.0.1:4000/user/all-books", json={'userId': user_id})
 # print("[[*] GET test(books) ]", response.text)
 
-# book_json = {
-#     'title': 'my test book',
-#     'description': 'little mongo db',
-#     'addedDate': '10:04pm',
-#     'imagePreviewUrl': image_path,
-#     'author': 'testing',
-#     'rating': 3,
-#     'genres': 'programming',
-#     'pages': 10,
-#     'localPath': local_path
-# }
-# r_json = {
-#     'bookInfo': book_json,
-#     'userId': user_id,
-# }
+book_json = {
+    'title': 'Python3 SQLAlchemy tutorial',
+    'description': 'A book of database management with SQLAlchemy',
+    'addedDate': str(datetime.datetime.utcnow()),
+    'imagePreviewUrl': image_path,
+    'author': 'tutorialspoint',
+    'rating': 5,
+    'genres': ["programming"],
+    'pages': 92,
+    'localPath': local_path
+}
+r_json = {
+    'bookInfo': book_json,
+    'userId': user_id,
+}
 
-# print(r_json)
-# response = requests.post('http://127.0.0.1:4000/user/post-book', json=r_json)
-# print("[[*] POST test(post book) ]", response.text)
-# book_id = response.json()['pdfInfo']['id']
+print(r_json)
+response = requests.post('http://127.0.0.1:4000/user/post-book', json=r_json)
+print("[[*] POST test(post book) ]", response.text)
+book_id = response.json()['pdfInfo']['id']
 
 
-# response = requests.get('http://127.0.0.1:4000/all-books')
+# response = requests.delete('http://127.0.0.1:4000/user/delete-all-books', json={'remoteFolder': 'pdfs/{}'.format(user_id)})
 # print("[[*] GET test(all books) ]", response.text)
 
 # response = requests.get('http://127.0.0.1:4000/user/all-books', json={'userId': user_id})

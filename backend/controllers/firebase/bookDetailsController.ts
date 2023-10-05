@@ -84,6 +84,7 @@ class BookDetailsController{
       typeof author !== "string" ||
       typeof rating !== "number" ||
       typeof pages !== "number" ||
+      genres.length === 0 ||
       typeof localPath !== "string"
     ){
       return {error: "invalid parameters for book details"};
@@ -116,7 +117,17 @@ class BookDetailsController{
     }
   }
 
-  async editBookInfo(bookInfo: any, userId: string, bookId: string):
+  async editBookInfo(bookInfo: {
+    title: string,
+    description: string,
+    addedDate: string,
+    imagePreviewUrl: string,
+    author: string,
+    rating: number,
+    genres: string[],
+    pages: number,
+    localPath: string
+  }, userId: string, bookId: string):
   Promise< any | {error: any}>{
     if (!bookInfo || !userId || !bookId){
         return {error: 'bad request'};
@@ -134,6 +145,7 @@ class BookDetailsController{
         typeof rating !== "number" ||
         typeof pages !== "number" ||
         typeof localPath !== "string" ||
+        genres.length === 0 ||
         typeof userId !== "string" ||
         typeof bookId !== "string"
       ){

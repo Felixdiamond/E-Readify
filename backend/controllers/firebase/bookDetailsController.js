@@ -78,6 +78,7 @@ class BookDetailsController {
                 typeof author !== "string" ||
                 typeof rating !== "number" ||
                 typeof pages !== "number" ||
+                genres.length === 0 ||
                 typeof localPath !== "string") {
                 return { error: "invalid parameters for book details" };
             }
@@ -125,6 +126,7 @@ class BookDetailsController {
                 typeof rating !== "number" ||
                 typeof pages !== "number" ||
                 typeof localPath !== "string" ||
+                genres.length === 0 ||
                 typeof userId !== "string" ||
                 typeof bookId !== "string") {
                 return { error: "invalid parameters for book details" };
