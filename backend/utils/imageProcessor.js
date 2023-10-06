@@ -1,17 +1,13 @@
-const fs = require('fs');
+const cloudinary = require('cloudinary').v2;
+const dotenv = require('dotenv');
 
+dotenv.config();
 
-function encodeToBase64(imagePath){
-  if (!imagePath){
-    return { error: 'missing image path' };
-  }
-  try{
-    const encodedImage = fs.readFileSync(imagePath, { encoding: 'base64' });
-    const prefixedEncodedeImage = 'data:image/png;base64,' + encodedImage;
-    return prefixedEncodedeImage;
-  } catch (error){
-    return error;
-  }
-}
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+  secure: true
+});
 
-module.exports = encodeToBase64;
+module.exports = cloudinary;

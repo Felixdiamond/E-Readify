@@ -65,7 +65,7 @@ router.patch('/user/edit', isAuthenticated, (req, res) => {
     });
 });
 
-router.delete('/user/delete', (req, res) => {
+router.delete('/user/delete', isAuthenticated, (req, res) => {
   authController.deleteUser(req.body.userId)
     .then((user) => {
       res.status(200).json(user);

@@ -69,14 +69,14 @@ print("[[*] user test ]", response.text)
 # print("[[*] GET test(books) ]", response.text)
 
 book_json = {
-    'title': 'Python3 SQLAlchemy tutorial',
-    'description': 'A book of database management with SQLAlchemy',
+    'title': 'Almost Impossible Integrals, Series and Summations',
+    'description': 'A book of advanced integration technique using series and sums in integral evaluation',
     'addedDate': str(datetime.datetime.utcnow()),
     'imagePreviewUrl': image_path,
-    'author': 'tutorialspoint',
+    'author': 'Paul J. Nahin',
     'rating': 5,
-    'genres': ["programming"],
-    'pages': 92,
+    'genres': ["Mathematics"],
+    'pages': 572,
     'localPath': local_path
 }
 r_json = {
@@ -87,7 +87,7 @@ r_json = {
 print(r_json)
 response = requests.post('http://127.0.0.1:4000/user/post-book', json=r_json)
 print("[[*] POST test(post book) ]", response.text)
-book_id = response.json()['pdfInfo']['id']
+# book_id = response.json()['pdfInfo']['id']
 
 
 # response = requests.delete('http://127.0.0.1:4000/user/delete-all-books', json={'remoteFolder': 'pdfs/{}'.format(user_id)})
