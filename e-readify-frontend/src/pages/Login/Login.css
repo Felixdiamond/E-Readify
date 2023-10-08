@@ -1,0 +1,122 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: black;
+}
+
+.login-container {
+    width: 30%;
+    position: relative;
+    padding: 2rem;
+    background: linear-gradient(to right, rgba(255,175,189,0.5) 0%, rgba(255,195,160,0.5) 100%);
+    margin: 0 auto;
+    border-radius: 10px;
+    box-sizing: border-box;
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15);
+  }
+  
+  
+
+.login-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-left {
+    margin-left: 0;
+}
+
+.logo-text {
+  background: #ffafbd;
+  background: -webkit-linear-gradient(to right, #ffafbd 0%, #ffc3a0 100%);
+  background: -moz-linear-gradient(to right, #ffafbd 0%, #ffc3a0 100%);
+  background: linear-gradient(to right, #ffafbd 0%, #ffc3a0 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.under-logo-text > span {
+    font-size: 10px;
+    @apply font-medium;
+}
+
+.close-right {
+    margin-left: auto;
+}
+
+.close-btn.close-btn {
+    background: transparent;
+    cursor: pointer;
+    @apply text-white;
+    border-radius: 10px;
+}
+
+.login-form {
+  margin-top: 2rem;
+}
+
+.login-group {
+  margin-bottom: 1rem;
+}
+
+#email {
+  background: transparent;
+  color: white;
+}
+
+#email:focus {
+  background: transparent;
+  border-color: #ffafbd;
+  box-shadow: none;
+}
+
+#email::placeholder {
+  color: white;
+}
+
+#password {
+  background: transparent;
+  color: white;
+}
+
+#password:focus {
+  background: transparent;
+  border-color: #ffafbd;
+  box-shadow: none;
+}
+
+#password::placeholder {
+  color: white;
+}
+
+.forgot-pass-txt {
+  position: relative;
+  color: #ffafbd;
+  cursor: pointer;
+  margin: 0 auto;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.login-btn-div {
+  margin-top: 1rem;
+}
+
+.login-btn-login {
+  @apply w-full text-black text-sm font-semibold border border-white rounded;
+}
+
+.login-btn-login:hover {
+  background: linear-gradient(to right, #ffafbd 0%, #ffc3a0 100%);
+  @apply text-black;
+  border: none;
+}
+
+.sign-up-instead {
+  margin-top: 1rem;
+  text-align: center;
+}

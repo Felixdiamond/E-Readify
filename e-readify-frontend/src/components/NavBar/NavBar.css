@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&family=Pixelify+Sans:wght@700&display=swap");
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 2vw;
+  box-sizing: border-box;
+}
+
+.logo {
+  padding-left: 2vw;
+}
+
+.logo-text {
+  background: #ffafbd;
+  background: -webkit-linear-gradient(to right, #ffafbd 0%, #ffc3a0 100%);
+  background: -moz-linear-gradient(to right, #ffafbd 0%, #ffc3a0 100%);
+  background: linear-gradient(to right, #ffafbd 0%, #ffc3a0 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav-items {
+  display: flex;
+  justify-content: space-around;
+  width: 40%;
+  text-align: center;
+  margin-left: 3vw;
+  @apply text-sm;
+}
+
+.search-signup-login {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 20%;
+}
+
+.signup-btn.signup-btn {
+  background: transparent;
+  border-color: white;
+  @apply text-sm;
+}
+
+.login-btn.login-btn {
+  margin-right: 2vw;
+  border: none;
+  background: linear-gradient(to right, #ffafbd 0%, #ffc3a0 100%);
+  @apply text-sm text-black;
+}
+
+.search-icon {
+  margin-right: 1vw;
+}
+
+.logo-text {
+  font-family: "Pacifico", cursive;
+  font-weight: 400;
+  @apply text-xl;
+}
+
+.funfont {
+  font-family: "Pixelify Sans", sans-serif;
+  font-weight: 700;
+  @apply text-4xl;
+}
