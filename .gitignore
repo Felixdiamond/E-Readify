@@ -27,3 +27,29 @@ frontend/*.ntvs*
 frontend/*.njsproj
 frontend/*.sln
 frontend/*.sw?
+
+# Logs
+e-readify-frontend/logs
+e-readify-frontend/*.log
+e-readify-frontend/npm-debug.log*
+e-readify-frontend/yarn-debug.log*
+e-readify-frontend/yarn-error.log*
+e-readify-frontend/pnpm-debug.log*
+e-readify-frontend/lerna-debug.log*
+
+e-readify-frontend/node_modules
+e-readify-frontend/dist
+e-readify-frontend/dist-ssr
+e-readify-frontend/*.local
+
+
+# Editor directories and files
+e-readify-frontend/.vscode/*
+e-readify-frontend/!.vscode/extensions.json
+e-readify-frontend/.idea
+e-readify-frontend/.DS_Store
+e-readify-frontend/*.suo
+e-readify-frontend/*.ntvs*
+e-readify-frontend/*.njsproj
+e-readify-frontend/*.sln
+e-readify-frontend/*.sw?
