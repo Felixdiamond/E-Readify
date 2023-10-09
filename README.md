@@ -440,4 +440,4 @@ The APIs are now ready for use. Note that GET request parameters are sent throug
 ## Authors
 
 - Jimoh Qudus <engineerphoenix1@gmail.com>
-- Felix Dawodu <diamondfelix006@hmail.com>
+- Felix Dawodu <diamondfelix006@gmail.com>
