@@ -20,14 +20,12 @@ class FirebaseAuthController {
                 const { email, password, photoUrl, firstName, lastName } = customUser;
                 if (!email ||
                     !password ||
-                    !photoUrl ||
                     !firstName ||
                     !lastName) {
                     return { 'error': 'Incomplete user model' };
                 }
                 if (typeof email !== "string" ||
                     typeof password !== "string" ||
-                    typeof photoUrl !== "string" ||
                     typeof firstName !== "string" ||
                     typeof lastName !== "string") {
                     return { error: "parameters must be strings" };

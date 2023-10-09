@@ -133,7 +133,7 @@ class BookDetailsController{
         return {error: 'bad request'};
       }
       const {title, description, addedDate, imagePreviewUrl, author, rating, genres, pages, localPath} = bookInfo;
-      if (!title || !description || !addedDate || imagePreviewUrl || !rating || !author || !genres || !pages || !localPath){
+      if (!title || !description || !addedDate || !imagePreviewUrl || !rating || !author || !genres || !pages || !localPath){
         return {error: 'missing book information'};
       }
       if (
@@ -178,7 +178,7 @@ class BookDetailsController{
     }
   }
 
-  async postUserFavorites(userId: string, favorites: string[]):
+  async postUserFavorites(userId: string, favorites: string):
   Promise<{
     id: string,
     status: string,
@@ -187,34 +187,15 @@ class BookDetailsController{
     if (!userId || !favorites){
       return {error: 'missing parameters'};
     }
-    if (typeof userId !== "string"){
-      return {error: 'user id must be a string'};
+    if (
+      typeof userId !== "string" || typeof favorites !== "string"
+    ){
+      return {error: 'user id must be a string and favorite must not be empty'};
     }
     try{
-      const response = await axios.post(`${this.BASEURL}/favorites/${userId}.json`, favorites);
+      const response = await axios.post(`${this.BASEURL}/favorites/${userId}.json`, {favorites});
       return {id: response.data.name, status: response.status, text: response.statusText};
     }catch(error: any){
-      return error;
-    }
-  }
-
-  async editUserFavorites(userId: string, favId: string, favorites: string[]):
-  Promise< any | {error: any}>
-  {
-    if (!userId || !favorites || !favId)
-    {
-      return {error: 'missing parameters'};
-    }
-    if (
-      typeof userId !== "string" ||
-      typeof favId !== "string"
-    ){
-      return {error: "favorite id or user id must be a string"};
-    }
-    try{
-      const response = await axios.put(`${this.BASEURL}/favorites/${userId}/${favId}.json`, favorites);
-      return response.data;
-    }catch(error){
       return error;
     }
   }
@@ -230,6 +211,22 @@ class BookDetailsController{
       const response = await axios.get(`${this.BASEURL}/favorites/${userId}.json`);
       return response.data;
     }catch(error){
+      return error;
+    }
+  }
+
+  async deleteUserFavorite(userId: string, favId: string): 
+    Promise< {status: string} | {error: any}>{
+    if (!userId || !favId){
+      return {error: 'missing parameters'};
+    }
+    if (typeof userId !== "string" || typeof favId !== "string"){
+      return {error: "user id or favorite id must be a string"};
+    }
+    try{
+      await axios.delete(`${this.BASEURL}/favorites/${userId}/${favId}.json`);
+      return {status: 'removed from deleted'};
+    }catch(error: any){
       return error;
     }
   }

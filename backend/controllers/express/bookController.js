@@ -1,6 +1,5 @@
 const storageOpsController = require('../firebase/storageOpsController');
 const bookDetailsController = require('../firebase/bookDetailsController');
-const cloudinary = require('../../utils/imageProcessor');
 
 
 class BookController{
@@ -20,22 +19,10 @@ class BookController{
   }
 
   async postBook(bookDetails, userId){
-    // const imagePath = bookDetails.imagePreviewUrl;
     const localPathCopy = bookDetails.localPath;
     const path = bookDetails.localPath.split('/');
     const trimmedPath = path[path.length - 1];
     bookDetails.localPath = trimmedPath;
-    // const previewUrl = await cloudinary.uploader.upload(imagePath,
-    //   {
-    //     public_id: `${userId}/${trimmedPath}`
-    //   },
-    //   (error, result)=>{
-    //   if (error){
-    //     return null;
-    //   }
-    //   return result;
-    // });
-    // bookDetails.imagePreviewUrl = previewUrl.url.toString();
     const resp = await this.preStorage.uploadBookInfo(bookDetails, userId);
     if (resp.error){
       return {error: 'upload failed'};
@@ -62,18 +49,23 @@ class BookController{
     return {status: 'deleted'};
   }
 
-  async editFavorites(userId, favId, favorites){
-    const response = await this.preStorage.editUserFavorites(userId, favId, favorites);
-    return response;
-  }
-
   async getFavorites(userId){
     const response = await this.preStorage.getUserFavorites(userId);
     return response;
   }
 
+  async deleteFavorite(userId, favId){
+    const response = await this.preStorage.deleteUserFavorite(userId, favId);
+    return response;
+  }
+
   async deleteFavorites(userId){
     const response = await this.preStorage.deleteUserFavorites(userId);
+    return response;
+  }
+
+  async postFavorite(userId, favorites){
+    const response = await this.preStorage.postUserFavorites(userId, favorites);
     return response;
   }
 }

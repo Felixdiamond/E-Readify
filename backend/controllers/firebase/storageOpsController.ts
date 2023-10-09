@@ -45,24 +45,29 @@ class BookStorageOpsController{
       if (!localPath || !remotePath){
         return {error: "missing file paths"};
       }
+      if (
+        typeof localPath !== "string" ||
+        typeof remotePath !== "string"
+      ){
+        return {error: "file paths must be strings"};
+      }
       const file = this.storageBucket.file(remotePath);
       if (!file){
         return {error: 'file not found'};
       }
-      file.createReadStream().
+      const resp = file.createReadStream().
       on('error', ( error: any ) => {
-        console.log(error);
         return error;
       }).on('end', ()=>{
       return {status: 'file downloaded successfully'};
       }).pipe(fs.createWriteStream(localPath));
+      return resp;
     }catch(error: any){
       return error;
     }
   }
 
-  async readBook(remotePath: string):
-  Promise<{ status: string, content: any} | { error: any }>{
+  async readBook(remotePath: string){
     try{
       if (!remotePath){
         return {error: 'missing file path'};
@@ -70,13 +75,27 @@ class BookStorageOpsController{
       if (typeof remotePath !== "string"){
         return {error: "remote file path must be a string"};
       }
-      const file = this.storageBucket.file(remotePath);
+      const file = await this.storageBucket.file(remotePath);
       if (!file){
         return {error: 'file not found'};
       }
-      const stream = file.createReadStream();
-      const contentStream = new Readable().wrap(stream);
-      return {status: 'OK', content: contentStream};
+      const stream = await file.createReadStream();
+      const chunks: any[] = [];
+      const resp = await new Promise((resolve, reject) => {
+        stream.on('data', (chunk: any) => {
+          chunks.push(chunk);
+        });
+  
+        stream.on('end', () => {
+          const content = Buffer.concat(chunks).toString('utf8');
+          resolve({ status: 'OK', content });
+        });
+  
+        stream.on('error', (error: any) => {
+          reject({ error: 'Error reading file' });
+        });
+      });
+      return resp;
     }catch(error: any){
       return error;
     }

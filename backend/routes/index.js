@@ -31,7 +31,6 @@ router.post('/user/register', (req, res) => {
 });
 
 router.post('/user/login',(req, res) => {
-  console.log(req.body);
   authController.logIn(req.body).then((response) => {
     res.status(200).json(response);
   })
@@ -56,7 +55,7 @@ router.get('/user', isAuthenticated, (req, res) => {
 });
 
 router.patch('/user/edit', isAuthenticated, (req, res) => {
-  authController.updateUser(req.body.displayName, req.body.photoURL)
+  authController.updateUser(req.query.displayName, req.query.photoURL)
     .then((user) => {
       res.status(200).json(user);
     })
@@ -86,7 +85,7 @@ router.get('/user/verify', (req, res) => {
 });
 
 router.get('/user/reset-password', isAuthenticated, (req, res) => {
-  authController.resetPassword(req.body.email)
+  authController.resetPassword(req.query.email)
     .then(resetPassword => {
       res.status(200).json(resetPassword);
     })
@@ -112,8 +111,8 @@ router.post('/user/post-book', isAuthenticated, (req, res) => {
   });
 });
 
-router.get('/user/get-book', isAuthenticated, (req, res) => {
-  bookController.getBook(req.body).then((response)=>{
+router.get('/download-book', isAuthenticated, (req, res) => {
+  bookController.getBook(req.query).then((response)=>{
     res.status(200).json(response);
   }).catch((error) => {
     res.status(404).json({data: error});
@@ -121,7 +120,7 @@ router.get('/user/get-book', isAuthenticated, (req, res) => {
 });
 
 router.get('/read-book', isAuthenticated, (req, res) => {
-  bookController.readBook(req.body.remotePath).then((response)=>{
+  bookController.readBook(req.query.remotePath).then((response)=>{
     res.status(200).json(response);
   }).catch((error)=>{
     res.status(404).json({data: error});
@@ -146,7 +145,7 @@ router.get('/all-books', isAuthenticated, (req, res)=>{
 });
 
 router.get('/user/all-books', isAuthenticated, (req, res)=>{
-  bookDetails.getAllUserBooksInfo(req.body.userId).then((response)=>{
+  bookDetails.getAllUserBooksInfo(req.query.userId).then((response)=>{
     res.status(200).json(response);
   }).catch((error) => {
     res.status(404).json({data: error});
@@ -154,7 +153,7 @@ router.get('/user/all-books', isAuthenticated, (req, res)=>{
 });
 
 router.get('/user/book', isAuthenticated, (req, res)=>{
-  const {userId, bookId} = req.body;
+  const {userId, bookId} = req.query;
   bookDetails.getBookInfo(userId, bookId).then((response)=>{
     res.status(200).json(response);
   }).catch((error) => {
@@ -163,7 +162,11 @@ router.get('/user/book', isAuthenticated, (req, res)=>{
 });
 
 router.put('/user/book/edit', isAuthenticated, (req, res)=>{
-  const {bookInfo, userId, bookId} = req.body;
+  const userId = req.body.userId;
+  const bookId = req.body.bookId;
+  const bookInfo = 
+    typeof req.body.bookInfo === "string" ?
+     JSON.parse(req.body.bookInfo) : req.body.bookInfo;
   bookDetails.editBookInfo(bookInfo, userId, bookId).then((response)=>{
     res.status(200).json(response);
   }).catch((error) => {
@@ -180,16 +183,7 @@ router.delete('/user/delete-all-books', isAuthenticated, (req, res)=>{
 });
 
 router.get('/user/books/favorites', isAuthenticated, (req, res)=>{
-  bookController.getFavorites(req.body.userId).then((response)=>{
-    res.status(200).json(response);
-  }).catch((error) => {
-    res.status(404).json({data: error});
-  });
-});
-
-router.put('/user/books/favorites/edit', isAuthenticated, (req, res)=>{
-  const {userId, favId, favorites} = req.body;
-  bookController.editFavorites(userId, favId, favorites).then((response)=>{
+  bookController.getFavorites(req.query.userId).then((response)=>{
     res.status(200).json(response);
   }).catch((error) => {
     res.status(404).json({data: error});
@@ -203,5 +197,23 @@ router.delete('/user/books/favorites/delete', isAuthenticated, (req, res)=>{
     res.status(404).json({data: error });
   });
 });
+
+router.post('/user/books/favorite/add', isAuthenticated, (req, res)=>{
+  bookController.postFavorite(req.body.userId, req.body.favorites).then((response)=>{
+    res.status(200).json(response);
+  }).catch((error) => {
+    res.status(404).json({data: error});
+  });
+});
+
+router.delete('/user/books/favorite/delete', isAuthenticated, (req, res)=>{
+  bookController.deleteFavorite(req.body.userId, req.body.favId).
+  then((response)=>{
+    res.status(200).json(response);
+  }).catch((error) => {
+    res.status(404).json({data: error});
+  });
+});
+
 
 module.exports = router;

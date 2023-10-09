@@ -20,7 +20,7 @@ class FirebaseAuthController {
   async createUser(customUser: {
     email: string;
     password: string;
-    photoUrl: string;
+    photoUrl: string | null;
     firstName: string;
     lastName: string;
   }): Promise<{ id: string; verifiedUser: boolean } | { error: any }> {
@@ -32,8 +32,7 @@ class FirebaseAuthController {
             lastName} = customUser;
       if (
           !email || 
-          !password || 
-          !photoUrl || 
+          !password ||  
           !firstName || 
           !lastName){
         return {'error': 'Incomplete user model'};
@@ -41,7 +40,6 @@ class FirebaseAuthController {
       if (
             typeof email !== "string" ||
             typeof password !== "string" ||
-            typeof photoUrl !== "string" ||
             typeof firstName !== "string" ||
             typeof lastName !== "string"
           ) {

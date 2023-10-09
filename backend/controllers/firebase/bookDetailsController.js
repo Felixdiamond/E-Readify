@@ -115,7 +115,7 @@ class BookDetailsController {
                 return { error: 'bad request' };
             }
             const { title, description, addedDate, imagePreviewUrl, author, rating, genres, pages, localPath } = bookInfo;
-            if (!title || !description || !addedDate || imagePreviewUrl || !rating || !author || !genres || !pages || !localPath) {
+            if (!title || !description || !addedDate || !imagePreviewUrl || !rating || !author || !genres || !pages || !localPath) {
                 return { error: 'missing book information' };
             }
             if (typeof title !== "string" ||
@@ -163,30 +163,12 @@ class BookDetailsController {
             if (!userId || !favorites) {
                 return { error: 'missing parameters' };
             }
-            if (typeof userId !== "string") {
-                return { error: 'user id must be a string' };
+            if (typeof userId !== "string" || typeof favorites !== "string") {
+                return { error: 'user id must be a string and favorite must not be empty' };
             }
             try {
-                const response = yield axios.post(`${this.BASEURL}/favorites/${userId}.json`, favorites);
+                const response = yield axios.post(`${this.BASEURL}/favorites/${userId}.json`, { favorites });
                 return { id: response.data.name, status: response.status, text: response.statusText };
-            }
-            catch (error) {
-                return error;
-            }
-        });
-    }
-    editUserFavorites(userId, favId, favorites) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!userId || !favorites || !favId) {
-                return { error: 'missing parameters' };
-            }
-            if (typeof userId !== "string" ||
-                typeof favId !== "string") {
-                return { error: "favorite id or user id must be a string" };
-            }
-            try {
-                const response = yield axios.put(`${this.BASEURL}/favorites/${userId}/${favId}.json`, favorites);
-                return response.data;
             }
             catch (error) {
                 return error;
@@ -204,6 +186,23 @@ class BookDetailsController {
             try {
                 const response = yield axios.get(`${this.BASEURL}/favorites/${userId}.json`);
                 return response.data;
+            }
+            catch (error) {
+                return error;
+            }
+        });
+    }
+    deleteUserFavorite(userId, favId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!userId || !favId) {
+                return { error: 'missing parameters' };
+            }
+            if (typeof userId !== "string" || typeof favId !== "string") {
+                return { error: "user id or favorite id must be a string" };
+            }
+            try {
+                yield axios.delete(`${this.BASEURL}/favorites/${userId}/${favId}.json`);
+                return { status: 'removed from deleted' };
             }
             catch (error) {
                 return error;

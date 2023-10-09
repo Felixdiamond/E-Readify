@@ -9,8 +9,8 @@ dotenv.config();
 
 const server = express();
 server.use(cors());
-server.use(bodyParser.json({ limit: '50mb' }));
-server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
+server.use(bodyParser.json({ limit: '100mb' }));
+server.use(bodyParser.urlencoded({ extended: true, limit: '100mb' }));
 server.use(express.json());
 server.use(router);
 

@@ -65,8 +65,8 @@ print("[[*] user test ]", response.text)
 # response = requests.get('http://127.0.0.1:4000/user/verification-status')
 # print("[[*] GET test(verification) ]", response.text)
 
-# response = requests.get("http://127.0.0.1:4000/user/all-books", json={'userId': user_id})
-# print("[[*] GET test(books) ]", response.text)
+response = requests.get("http://127.0.0.1:4000/all-books")
+print("[[*] GET test(books) ]", response.text)
 
 book_json = {
     'title': 'Almost Impossible Integrals, Series and Summations',
@@ -74,18 +74,19 @@ book_json = {
     'addedDate': str(datetime.datetime.utcnow()),
     'imagePreviewUrl': image_path,
     'author': 'Paul J. Nahin',
-    'rating': 5,
-    'genres': ["Mathematics"],
+    'rating': 3,
+    'genres': ["Mathematics", "Calculus"],
     'pages': 572,
     'localPath': local_path
 }
 r_json = {
     'bookInfo': book_json,
     'userId': user_id,
+    'bookId': "-Ng5oDfzu2X4EPJsU07E"
 }
 
 print(r_json)
-response = requests.post('http://127.0.0.1:4000/user/post-book', json=r_json)
+response = requests.put('http://127.0.0.1:4000/user/book/edit', json=r_json)
 print("[[*] POST test(post book) ]", response.text)
 # book_id = response.json()['pdfInfo']['id']
 
