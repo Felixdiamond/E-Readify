@@ -47,8 +47,7 @@ After installation, navigate to the folder and run the following snippet
     server running on port ......
 ```
 
-The APIs are now ready for use
-Note: GET request parameters are sent through the param object and other requests are sent through the body object of the http request.
+The APIs are now ready for use. Note that GET request parameters are sent through the param object and other requests are sent through the body object of the http request.
 
 ## APIs
 
@@ -64,7 +63,7 @@ Note: GET request parameters are sent through the param object and other request
         firstName: 'myFirstName',
         lastName: 'myLastName'
     };
-    const newUser = request.post('myserverurl/user/register', body=userJson);
+    const newUser = request.post('myserverurl/user/register', body=credentials);
     console.log(newUser);
     //the output
      {
